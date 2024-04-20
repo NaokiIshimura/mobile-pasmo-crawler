@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { docClient, tableName } from "@/clients/dymamodb";
+import { docClient, authenticatorTableName } from "@/clients/dymamodb";
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export const AuthImage = ({ id }) => {
@@ -12,9 +12,9 @@ export const AuthImage = ({ id }) => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        console.log(data)
+        // console.log(data)
         const command = new PutCommand({
-            TableName: tableName,
+            TableName: authenticatorTableName,
             Item: {
                 id: id,
                 dataType: 'authImage',
@@ -35,7 +35,7 @@ export const AuthImage = ({ id }) => {
 
     const getAuthImage = async (id) => {
         const command = new GetCommand({
-            TableName: tableName,
+            TableName: authenticatorTableName,
             Key: {
                 id: id,
                 dataType: 'authImage'

@@ -9,7 +9,7 @@ const browser = await puppeteer.launch({
 const page = await browser.newPage();
 
 try {
-    const id = 'local';
+    const id = 'testuser';
     await main(page, id);
 } catch (e) {
     console.log(e);

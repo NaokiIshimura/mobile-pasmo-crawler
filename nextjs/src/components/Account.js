@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { docClient, tableName } from "@/clients/dymamodb";
+import { docClient, authenticatorTableName } from "@/clients/dymamodb";
 import { PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export const Account = ({ id }) => {
@@ -13,7 +13,7 @@ export const Account = ({ id }) => {
     const onSubmit = async (data) => {
         // console.log(data)
         const command = new PutCommand({
-            TableName: tableName,
+            TableName: authenticatorTableName,
             Item: {
                 id: id,
                 dataType: 'account',
