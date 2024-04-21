@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "local": "TABLE_NAME=mpc-default-crawler-table node local.mjs",
-    "parse": "TABLE_NAME=mpc-default-crawler-table node parse.mjs"
+    "local": "TABLE_NAME=mpc-default-crawler-table AUTHENTICATOR_TABLE_NAME=mpc-default-authenticator-table node local.mjs"
   },
   "author": "",
   "license": "ISC",

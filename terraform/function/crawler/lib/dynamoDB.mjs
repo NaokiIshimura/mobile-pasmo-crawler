@@ -6,10 +6,11 @@ const client = new DynamoDBClient({ region: "ap-northeast-1" });
 const docClient = DynamoDBDocumentClient.from(client);
 
 const TABNE_NAME = process.env.TABLE_NAME
+const AUTHENTICATOR_TABLE_NAME = process.env.AUTHENTICATOR_TABLE_NAME
 
 export const setAuthImageBinary = async (id, base64) => {
     const command = new PutCommand({
-        TableName: TABNE_NAME,
+        TableName: AUTHENTICATOR_TABLE_NAME,
         Item: {
             id: id,
             dataType: 'authImage',
@@ -25,7 +26,7 @@ export const setAuthImageBinary = async (id, base64) => {
 
 export const removeAuthImageBinaryAndText = async (id) => {
     const command = new DeleteCommand({
-        TableName: TABNE_NAME,
+        TableName: AUTHENTICATOR_TABLE_NAME,
         Key: {
             id: id,
             dataType: 'authImage',
@@ -39,7 +40,7 @@ export const removeAuthImageBinaryAndText = async (id) => {
 
 export const getAccount = async (id) => {
     const command = new GetCommand({
-        TableName: TABNE_NAME,
+        TableName: AUTHENTICATOR_TABLE_NAME,
         Key: {
             id: id,
             dataType: 'account'
@@ -53,7 +54,7 @@ export const getAccount = async (id) => {
 
 export const getAuthImage = async (id) => {
     const command = new GetCommand({
-        TableName: TABNE_NAME,
+        TableName: AUTHENTICATOR_TABLE_NAME,
         Key: {
             id: id,
             dataType: 'authImage'
@@ -65,12 +66,13 @@ export const getAuthImage = async (id) => {
     return { binary: Item.binary, text: Item.text }
 }
 
-export const putSource = async (id, source) => {
+export const putSource = async (id, dataType, url, source) => {
     const command = new PutCommand({
         TableName: TABNE_NAME,
         Item: {
             id: id,
-            dataType: 'source',
+            dataType: dataType,
+            url: url,
             html: source.replace(/\t|\n/g, ''),
             timestamp: moment().unix(),
         }
@@ -81,12 +83,12 @@ export const putSource = async (id, source) => {
     // return response;
 }
 
-export const getSource = async (id) => {
+export const getSource = async (id, dataType) => {
     const command = new GetCommand({
         TableName: TABNE_NAME,
         Key: {
             id: id,
-            dataType: 'source',
+            dataType: dataType,
         }
     });
 

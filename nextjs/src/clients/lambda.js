@@ -9,3 +9,4 @@ export const client = new LambdaClient({
 });
 
 export const functionName = process.env.NEXT_PUBLIC_FUNCTION_NAME;
+export const crawlerFunctionName = process.env.NEXT_PUBLIC_CRAWLER_FUNCTION_NAME;

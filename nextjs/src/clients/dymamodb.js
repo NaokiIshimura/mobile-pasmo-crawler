@@ -11,3 +11,6 @@ const client = new DynamoDBClient({
 
 export const docClient = DynamoDBDocumentClient.from(client);
 export const tableName = process.env.NEXT_PUBLIC_TABLE_NAME;
+export const authenticatorTableName = process.env.NEXT_PUBLIC_AUTHENTICATOR_TABLE_NAME;
+export const crawlerTableName = process.env.NEXT_PUBLIC_CRAWLER_TABLE_NAME;
+export const moderatorTableName = process.env.NEXT_PUBLIC_MODERATOR_TABLE_NAME;

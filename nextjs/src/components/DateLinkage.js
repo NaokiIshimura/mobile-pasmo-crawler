@@ -1,12 +1,12 @@
 import { InvokeCommand } from "@aws-sdk/client-lambda";
-import { client, functionName } from "@/clients/lambda";
+import { client, crawlerFunctionName } from "@/clients/lambda";
 
 export const DataLinkage = ({ id }) => {
 
     const invoke = async () => {
         // console.log('invoke');
         const command = new InvokeCommand({
-            FunctionName: functionName,
+            FunctionName: crawlerFunctionName,
             InvocationType: 'Event'
         });
         await client.send(command);

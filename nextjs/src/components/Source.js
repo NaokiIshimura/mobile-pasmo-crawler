@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { docClient, tableName } from "@/clients/dymamodb";
+import { docClient, crawlerTableName } from "@/clients/dymamodb";
 import moment from 'moment';
 
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
@@ -17,7 +17,7 @@ export const Source = ({ id }) => {
 
     const getSource = async (id) => {
         const command = new GetCommand({
-            TableName: tableName,
+            TableName: crawlerTableName,
             Key: {
                 id: id,
                 dataType: 'source'

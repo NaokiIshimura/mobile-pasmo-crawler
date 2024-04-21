@@ -14,9 +14,20 @@ nextjs     | クライアント
 ### 準備
 
 ```
+# /
+$ cd terraform
 $ terraform init
-$ cd function 
+
+$ cd function/crawler
 $ npm install --production
+
+$ cd ../parser
+$ npm install --production
+
+$ cd ../moderator
+$ npm install --production
+
+$ cd ../..
 ```
 
 ### コマンド
@@ -44,9 +55,12 @@ $ terraform destory
 # nextjs/.env
 NEXT_PUBLIC_REGION=ap-northeast-1
 NEXT_PUBLIC_ACCESS_KEY=xxxxx
-NEXT_PUBLIC_SECRET_ACCESS_KEY=xxx
-NEXT_PUBLIC_TABLE_NAME=mpc-default-crawler-table
-NEXT_PUBLIC_FUNCTION_NAME=mpc-default-crawler-function
+NEXT_PUBLIC_SECRET_ACCESS_KEY=xxxxx
+NEXT_PUBLIC_AUTHENTICATOR_TABLE_NAME=mpc-default-authenticator-table
+NEXT_PUBLIC_CRAWLER_TABLE_NAME=mpc-default-crawler-table
+NEXT_PUBLIC_CRAWLER_FUNCTION_NAME=mpc-default-crawler-function
+NEXT_PUBLIC_MODERATOR_TABLE_NAME=mpc-default-moderator-table
+
 ```
 
 ### コマンド

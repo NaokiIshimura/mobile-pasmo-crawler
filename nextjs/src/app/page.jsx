@@ -6,13 +6,14 @@ import { Source } from "@/components/Source"
 import { AuthImage } from "@/components/AuthImage"
 import { DataLinkage } from "@/components/DateLinkage";
 import { Account } from "@/components/Account";
+import { History } from "@/components/History"
 
 export default function Home() {
 
   const id = 'testuser';
 
   return (
-    <main className='p-5'>
+    <main className='p-10'>
 
       <p className='text-xl font-bold my-3'>モバイルPASMO</p>
 
@@ -30,7 +31,7 @@ export default function Home() {
 
       <hr className='my-20' />
 
-      <Source id={id} />
+      <History id={id} />
 
     </main >
   );
