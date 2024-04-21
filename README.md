@@ -14,7 +14,6 @@ nextjs     | クライアント
 ### 準備
 
 ```
-# /
 $ cd terraform
 $ terraform init
 
@@ -65,6 +64,8 @@ NEXT_PUBLIC_MODERATOR_TABLE_NAME=mpc-default-moderator-table
 
 ### コマンド
 ```
+# cd nextjs
+
 # 準備
 $ npm install
 
