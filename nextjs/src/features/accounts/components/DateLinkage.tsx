@@ -1,5 +1,6 @@
 import { InvokeCommand } from "@aws-sdk/client-lambda";
 import { client, crawlerFunctionName } from "@/clients/lambda";
+import { AuthImage } from "./AuthImage"
 
 type Props = {
     id: string;
@@ -17,10 +18,15 @@ export const DataLinkage = ({ id }: Props) => {
     }
 
     return (
-        <div>
-            <p className='inline-block mr-3 text-lg font-bold my-3'>2. データ連携</p>
-            <input className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded" type="submit" value="更新" onClick={invoke} />
+        <div className="pasmo-block">
+            <div className="pasmo-header">
+                <span>データ連携</span>
+            </div>
+            <div className="pasmo-body">
+                <input className="pasmo-button" type="submit" value="更新" onClick={invoke} />
+                <hr className="my-3" />
+                <AuthImage id={id} />
+            </div>
         </div>
-
     )
 }

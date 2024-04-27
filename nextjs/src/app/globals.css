@@ -29,8 +29,28 @@ body {
   }
 } */
 
+body {
+  @apply text-gray-500;
+}
+
 table,
 th,
 td {
-  @apply border p-3;
+  @apply border px-3 py-2;
+}
+
+.pasmo-block {
+  @apply w-[500px] border border-[#ED77AC] rounded;
+}
+
+.pasmo-header {
+  @apply px-4 py-2 bg-[#ED77AC] font-bold text-white;
+}
+
+.pasmo-body {
+  @apply p-3;
+}
+
+.pasmo-button {
+  @apply px-3 py-1 border border-[#ED77AC] hover:bg-[#ED77AC] text-[#ED77AC] hover:text-white font-bold rounded;
 }

@@ -44,36 +44,41 @@ export const History = ({ id }: Props) => {
     }
 
     return (
-        <div>
-            <p className='inline-block mr-3 text-lg font-bold my-3'>4. 履歴</p>
-            <input className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded" type="submit" value="更新" onClick={reload} />
-
-            <div className='my-3'>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>日付</th>
-                            <th>分類</th>
-                            <th>金額</th>
-                            <th>詳細</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            history.map((h, idx) => {
-                                return (
-                                    <tr key={idx}>
-                                        <td>{h.date}</td>
-                                        <td>{h.category}</td>
-                                        <td>{h.value}</td>
-                                        <td>{h.detail ? `${h.detail.in} → ${h.detail.out}` : ''}</td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+        <div className="pasmo-block">
+            <div className="pasmo-header">
+                <span>履歴</span>
             </div>
-        </div>
+            <div className="pasmo-body">
+                <input className="pasmo-button" type="submit" value="更新" onClick={reload} />
+
+                <div className='my-3'>
+                    <table className='w-full'>
+                        <thead>
+                            <tr>
+                                <th>日付</th>
+                                <th>分類</th>
+                                <th>金額</th>
+                                <th>詳細</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                history.map((h, idx) => {
+                                    return (
+                                        <tr key={idx}>
+                                            <td>{h.date}</td>
+                                            <td>{h.category}</td>
+                                            <td>{h.value}</td>
+                                            <td>{h.detail ? `${h.detail.in} → ${h.detail.out}` : ''}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div >
+
     )
 }

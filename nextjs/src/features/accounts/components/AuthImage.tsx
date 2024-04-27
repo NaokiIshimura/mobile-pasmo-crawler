@@ -63,8 +63,6 @@ export const AuthImage = ({ id }: Props) => {
 
     return (
         <div>
-            <p className='inline-block mr-3 text-lg font-bold my-3'>3. 認証画像</p>
-
             {authImage?.binary ?
                 <div>
                     <img className='my-3' src={`data:image/gif;base64, ${authImage?.binary}`}></img>
@@ -74,7 +72,7 @@ export const AuthImage = ({ id }: Props) => {
                     </form>
                 </div>
                 :
-                <input className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded" type="submit" value="取得" onClick={reload} />
+                <input className="pasmo-button" type="submit" value="認証画像取得" onClick={reload} />
             }
 
 

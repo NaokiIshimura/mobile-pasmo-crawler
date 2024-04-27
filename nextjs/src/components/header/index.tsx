@@ -1,8 +1,10 @@
 export const Header = () => {
     return (
-        <header>
-            < p className='text-xl font-bold my-3' > モバイルPASMO</p >
-        </header >
+        <header className="px-5 p-3 border-b-2 border-[#ED77AC]">
+            <span className="text-xl font-extrabold text-[#ED77AC]">
+                モバイルPASMOクローラー
+            </span>
+        </header>
     )
 }
 

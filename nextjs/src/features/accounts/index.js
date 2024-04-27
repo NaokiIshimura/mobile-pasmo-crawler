@@ -1,5 +1,4 @@
 import { AuthAccount } from "./components/AuthAccount";
-import { AuthImage } from "./components/AuthImage"
 import { DataLinkage } from "./components/DateLinkage";
 import { History } from "./components/History"
 
@@ -7,23 +6,19 @@ export default function Account({ id }) {
     return (
         <div className="px-5">
 
-            <p className='text-lg font-bold my-3'>id: {id}</p>
+            <div className="border-b border-[#ED77AC]">
+                <p className='my-3 text-lg font-bold text-[#ED77AC]'>id: {id}</p>
+            </div>
 
-            <hr className="my-10" />
-
-            <div className="px-5">
+            <div className="p-5">
                 <AuthAccount id={id} />
+            </div>
 
-                <hr className='my-20' />
-
+            <div className="p-5">
                 <DataLinkage id={id} />
+            </div>
 
-                <hr className='my-20' />
-
-                <AuthImage id={id} />
-
-                <hr className='my-20' />
-
+            <div className="p-5">
                 <History id={id} />
             </div>
 

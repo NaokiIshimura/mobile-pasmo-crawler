@@ -42,15 +42,17 @@ export const AuthAccount = ({ id }: Props) => {
     }
 
     return (
-        <div>
-            <p className='text-lg font-bold my-3'>1. アカウント登録</p>
-
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input className='border py-1 px-3 mr-3 rounded' placeholder='メールアドレス' {...register("mailAddress", { required: true })} />
-                <input className='border py-1 px-3 mr-3 rounded' placeholder='パスワード' {...register("password", { required: true })} />
-                <input className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-1 px-3 rounded" type="submit" value="登録" />
-            </form>
-
+        <div className="pasmo-block">
+            <div className="pasmo-header">
+                <span>アカウント登録</span>
+            </div>
+            <div className="pasmo-body">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <input className='mb-3 py-1 px-3 block border rounded' placeholder='メールアドレス' {...register("mailAddress", { required: true })} />
+                    <input className='mb-3 py-1 px-3 block border rounded' placeholder='パスワード' {...register("password", { required: true })} />
+                    <input className="py-1 px-3 block pasmo-button" type="submit" value="登録" />
+                </form>
+            </div>
         </div>
     )
 }
