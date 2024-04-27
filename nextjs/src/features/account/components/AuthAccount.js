@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { docClient, authenticatorTableName } from "@/clients/dymamodb";
 import { PutCommand } from "@aws-sdk/lib-dynamodb";
 
-export const Account = ({ id }) => {
+export const AuthAccount = ({ id }) => {
     const {
         register,
         handleSubmit,

@@ -50,9 +50,9 @@ export const History = ({ id }) => {
                     </thead>
                     <tbody>
                         {
-                            history.map(h => {
+                            history.map((h, idx) => {
                                 return (
-                                    <tr>
+                                    <tr key={idx}>
                                         <td>{h.date}</td>
                                         <td>{h.category}</td>
                                         <td>{h.value}</td>
