@@ -12,12 +12,13 @@ type Props = {
 
 export const DataLinkage = ({ id }: Props) => {
 
-    type Inputs = {
+    type AuthImageItem = {
+        binary: string;
         text: string;
     }
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [authImage, setAuthImage] = useState({});
+    const [authImage, setAuthImage] = useState<AuthImageItem | undefined>(undefined);
 
     const {
         register,
@@ -37,7 +38,7 @@ export const DataLinkage = ({ id }: Props) => {
         await client.send(command);
 
         for (let i = 0; i < 10; i++) {
-            const authImage = await getAuthImage(id);
+            const authImage = await getAuthImage(id) as AuthImageItem;
             if (authImage?.binary) {
                 setAuthImage(authImage);
                 break;
@@ -58,8 +59,12 @@ export const DataLinkage = ({ id }: Props) => {
         });
 
         const { Item } = await docClient.send(command);
-        // console.log(Item);
+        console.log(Item);
         return { binary: Item?.binary, text: Item?.text }
+    }
+
+    type Inputs = {
+        text: string;
     }
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -101,13 +106,20 @@ export const DataLinkage = ({ id }: Props) => {
                         wrapperClass="flex justify-center"
                     />
                     :
-                    <div>
-                        <img className='my-3' src={`data:image/gif;base64, ${authImage?.binary}`}></img>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <input className='border py-1 px-3 mr-3 rounded' placeholder='認証テキスト' {...register("text", { required: true })} />
-                            <input className="pasmo-button" type="submit" />
-                        </form>
-                    </div>
+                    <>
+                        {
+                            authImage ?
+                                <div>
+                                    <img className='my-3' src={`data:image/gif;base64, ${authImage.binary}`}></img>
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                        <input className='border py-1 px-3 mr-3 rounded outline-none' placeholder='認証テキスト' {...register("text", { required: true })} />
+                                        <input className="pasmo-button" type="submit" />
+                                    </form>
+                                </div>
+                                :
+                                <span>更新ボタンをクリックしてください。</span>
+                        }
+                    </>
                 }
             </div>
         </div>
