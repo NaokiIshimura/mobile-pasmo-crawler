@@ -1,17 +1,26 @@
-import { useState, useEffect } from 'react';
-import { useForm } from "react-hook-form";
+import { useState } from 'react';
+import { useForm, SubmitHandler } from "react-hook-form";
 import { docClient, authenticatorTableName } from "@/clients/dymamodb";
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
-export const AuthImage = ({ id }) => {
+type Props = {
+    id: string;
+}
+
+export const AuthImage = ({ id }: Props) => {
+
+    type Inputs = {
+        text: string;
+    }
+
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm()
+    } = useForm<Inputs>()
 
-    const onSubmit = async (data) => {
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
         const command = new PutCommand({
             TableName: authenticatorTableName,
@@ -33,7 +42,7 @@ export const AuthImage = ({ id }) => {
 
     const [authImage, setAuthImage] = useState({});
 
-    const getAuthImage = async (id) => {
+    const getAuthImage = async (id: string) => {
         const command = new GetCommand({
             TableName: authenticatorTableName,
             Key: {

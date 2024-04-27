@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 
-
 export const Source = ({ id }) => {
 
     const [source, setSource] = useState({});

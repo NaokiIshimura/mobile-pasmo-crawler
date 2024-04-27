@@ -1,6 +1,6 @@
 "use client"
 
-import Account from "@/features/account"
+import Account from "@/features/accounts"
 
 export default function Home() {
 

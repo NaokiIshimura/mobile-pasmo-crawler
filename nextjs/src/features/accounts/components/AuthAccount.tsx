@@ -1,16 +1,27 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { docClient, authenticatorTableName } from "@/clients/dymamodb";
 import { PutCommand } from "@aws-sdk/lib-dynamodb";
 
-export const AuthAccount = ({ id }) => {
+type Props = {
+    id: string;
+}
+
+export const AuthAccount = ({ id }: Props) => {
+
+    type Inputs = {
+        mailAddress: string;
+        password: string;
+    }
+
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm()
+    } = useForm<Inputs>()
 
-    const onSubmit = async (data) => {
+
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
         const command = new PutCommand({
             TableName: authenticatorTableName,

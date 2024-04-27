@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react';
 import { docClient, moderatorTableName } from "@/clients/dymamodb";
-
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
+type Props = {
+    id: string;
+}
 
-export const History = ({ id }) => {
+export const History = ({ id }: Props) => {
 
-    const [history, setHistory] = useState([]);
+    type HistoryItem = {
+        id: string;
+        dataType: string;
+        date: string;
+        category: string;
+        value: number;
+    }
+
+    const [history, setHistory] = useState<HistoryItem[]>([]);
 
     useEffect(() => {
         (async () => {
@@ -14,7 +24,7 @@ export const History = ({ id }) => {
         })()
     }, []);
 
-    const getHistory = async (id) => {
+    const getHistory = async (id: string) => {
         const command = new QueryCommand({
             TableName: moderatorTableName,
             KeyConditionExpression: 'id = :id',
@@ -25,11 +35,11 @@ export const History = ({ id }) => {
 
         const { Items } = await docClient.send(command);
         // console.log(Items);
-        return Items
+        return Items;
     }
 
     const reload = async () => {
-        const history = await getHistory(id);
+        const history = await getHistory(id) as HistoryItem[];
         setHistory(history);
     }
 

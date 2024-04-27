@@ -1,7 +1,11 @@
 import { InvokeCommand } from "@aws-sdk/client-lambda";
 import { client, crawlerFunctionName } from "@/clients/lambda";
 
-export const DataLinkage = ({ id }) => {
+type Props = {
+    id: string;
+}
+
+export const DataLinkage = ({ id }: Props) => {
 
     const invoke = async () => {
         // console.log('invoke');
