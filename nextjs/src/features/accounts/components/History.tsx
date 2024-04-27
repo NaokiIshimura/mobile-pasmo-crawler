@@ -45,11 +45,11 @@ export const History = ({ id }: Props) => {
 
     return (
         <div className="pasmo-block">
-            <div className="pasmo-header">
+            <div className="pasmo-header flex justify-between">
                 <span>履歴</span>
+                <input className="pasmo-button-small" type="submit" value="更新" onClick={reload} />
             </div>
             <div className="pasmo-body">
-                <input className="pasmo-button" type="submit" value="更新" onClick={reload} />
 
                 <div className='my-3'>
                     <table className='w-full'>

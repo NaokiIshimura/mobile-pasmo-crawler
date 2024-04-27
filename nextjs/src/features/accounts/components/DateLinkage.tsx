@@ -19,12 +19,11 @@ export const DataLinkage = ({ id }: Props) => {
 
     return (
         <div className="pasmo-block">
-            <div className="pasmo-header">
+            <div className="pasmo-header flex justify-between">
                 <span>データ連携</span>
+                <input className="pasmo-button-small" type="submit" value="更新" onClick={invoke} />
             </div>
             <div className="pasmo-body">
-                <input className="pasmo-button" type="submit" value="更新" onClick={invoke} />
-                <hr className="my-3" />
                 <AuthImage id={id} />
             </div>
         </div>

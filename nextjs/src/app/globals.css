@@ -52,5 +52,9 @@ td {
 }
 
 .pasmo-button {
-  @apply px-3 py-1 border border-[#ED77AC] hover:bg-[#ED77AC] text-[#ED77AC] hover:text-white font-bold rounded;
+  @apply px-3 py-1 border border-[#ED77AC] bg-white hover:bg-[#ED77AC] text-[#ED77AC] hover:text-white font-bold rounded;
+}
+
+.pasmo-button-small {
+  @apply px-2 border border-[#ED77AC] bg-white hover:bg-gray-50 text-xs font-thin text-[#ED77AC] rounded;
 }
