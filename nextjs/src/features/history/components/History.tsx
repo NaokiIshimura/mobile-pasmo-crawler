@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { docClient, moderatorTableName } from "@/clients/dymamodb";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { TailSpin } from 'react-loader-spinner';
+import HistoryTable from './HistoryTable';
+import CostTable from './CostTable';
 
 type Props = {
     id: string;
@@ -37,6 +39,7 @@ export const History = ({ id }: Props) => {
             ExpressionAttributeValues: {
                 ':id': id,
             },
+            ScanIndexForward: false
         });
 
         const { Items } = await docClient.send(command);
@@ -72,30 +75,8 @@ export const History = ({ id }: Props) => {
                             wrapperClass="flex justify-center"
                         />
                         :
-                        <table className='w-full'>
-                            <thead>
-                                <tr>
-                                    <th>日付</th>
-                                    <th>分類</th>
-                                    <th>金額</th>
-                                    <th>詳細</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    history.map((h, idx) => {
-                                        return (
-                                            <tr key={idx}>
-                                                <td>{h.date}</td>
-                                                <td>{h.category}</td>
-                                                <td>{h.value}</td>
-                                                <td>{h.detail ? `${h.detail.in} → ${h.detail.out}` : ''}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                        <HistoryTable history={history} />
+                        // <CostTable history={history.slice().reverse()} />
                     }
                 </div>
             </div>
