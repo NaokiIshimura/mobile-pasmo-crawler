@@ -36,7 +36,7 @@ body {
 table,
 th,
 td {
-  @apply border px-3 py-2;
+  @apply border border-gray-300 px-3 py-2;
 }
 
 .pasmo-block {

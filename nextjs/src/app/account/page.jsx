@@ -1,6 +1,7 @@
 "use client"
 
 import Account from "@/features/account"
+import User from '@/components/user'
 
 export default function Home() {
 
@@ -8,9 +9,7 @@ export default function Home() {
 
   return (
     <div className="px-10">
-      <div className="border-b border-[#ED77AC]">
-        <p className='my-3 text-lg font-bold text-[#ED77AC]'>id: {id}</p>
-      </div>
+      <User id={id} />
       <div>
         <Account id={id} />
       </div>

@@ -10,7 +10,7 @@ type Props = {
     id: string;
 }
 
-export const DataLinkage = ({ id }: Props) => {
+export default function DataLinkage({ id }: Props) {
 
     type AuthImageItem = {
         binary: string;

@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { docClient, moderatorTableName } from "@/clients/dymamodb";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { TailSpin } from 'react-loader-spinner';
-import HistoryTable from './HistoryTable';
+import Table from './table';
 import CostTable from './CostTable';
 
 type Props = {
     id: string;
 }
 
-export const History = ({ id }: Props) => {
+export default function History({ id }: Props) {
 
     type HistoryItem = {
         id: string;
@@ -75,7 +75,7 @@ export const History = ({ id }: Props) => {
                             wrapperClass="flex justify-center"
                         />
                         :
-                        <HistoryTable history={history} />
+                        <Table history={history} />
                         // <CostTable history={history.slice().reverse()} />
                     }
                 </div>

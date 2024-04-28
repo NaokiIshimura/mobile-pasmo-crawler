@@ -2,7 +2,7 @@
 
 import User from '@/components/user'
 import DataLinkage from "@/features/dataLinkage";
-import History from "@/features/history"
+import Cost from "@/features/cost"
 
 export default function Home() {
 
@@ -17,7 +17,7 @@ export default function Home() {
                 </div>
 
                 <div className="py-5">
-                    <History id={id} />
+                    <Cost id={id} />
                 </div>
             </div>
         </div>
