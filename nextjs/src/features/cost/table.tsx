@@ -18,39 +18,74 @@ type HistoryItem = {
 
 export default function Table({ history }: Props) {
 
-    console.log(history.reverse())
+    interface CostData {
+        date: string;
+        transportation: string;
+        route: { from: string; to: string };
+        round: string;
+        value: number;
+    }
 
-    const [arr, setArr] = useState([]);
+    const [arr, setArr] = useState<CostData[]>([]);
 
     useEffect(() => {
-        let fareArr = [];
-        history.map(h => {
-            if (h.category === '運賃') {
-                fareArr.push({ date: h.date, transportation: '電車', route: { from: h.detail.in, to: h.detail.out }, value: h.value });
-            }
-        });
-        console.log(fareArr);
+        interface HistoryItem {
+            date: string;
+            category: string;
+            detail: { in: string; out: string };
+            value: number;
+        }
 
-        let costArr = [];
-        let skipArr = [];
+        interface FareData {
+            date: string;
+            transportation: string;
+            route: { from: string; to: string };
+            value: number;
+        }
+
+        // 運賃データを抽出する
+        const fareArr: FareData[] = history
+            .filter((h: HistoryItem) => h.category === '運賃')
+            .map((h: HistoryItem) => ({
+                date: h.date,
+                transportation: '電車',
+                route: { from: h.detail.in, to: h.detail.out },
+                value: h.value
+            }));
+
+        // 往復切符の処理を行う
+        const costArr: CostData[] = [];
+        const processedIndexes: { [key: number]: boolean } = {}; // 処理済みのインデックスを格納するオブジェクト
+
         for (let i = 0; i < fareArr.length; i++) {
-            if (skipArr.includes(i)) {
-                continue;
+            if (processedIndexes[i]) {
+                continue; // すでに処理されたインデックスはスキップ
             }
-            let round = '片道'
+
+            let round: string = '片道';
             for (let j = i + 1; j < fareArr.length; j++) {
-                if (fareArr[i].date === fareArr[j].date && fareArr[i].route.from === fareArr[j].route.to && fareArr[i].route.to === fareArr[j].route.from) {
-                    round = '往復'
-                    skipArr.push(j)
+                const isRoundTrip: boolean =
+                    fareArr[i].date === fareArr[j].date &&
+                    fareArr[i].route.from === fareArr[j].route.to &&
+                    fareArr[i].route.to === fareArr[j].route.from;
+
+                if (isRoundTrip) {
+                    round = '往復';
+                    processedIndexes[j] = true; // 処理済みインデックスをマークして重複を防ぐ
                     break;
                 }
             }
-            if (round === '往復') {
-                costArr.push({ date: fareArr[i].date, transportation: '電車', route: { from: fareArr[i].route.from, to: fareArr[i].route.to }, round: '往復', value: fareArr[i].value * 2 });
-            } else {
-                costArr.push({ date: fareArr[i].date, transportation: '電車', route: { from: fareArr[i].route.from, to: fareArr[i].route.to }, round: '片道', value: fareArr[i].value });
-            }
+
+            const cost: CostData = {
+                date: fareArr[i].date,
+                transportation: '電車',
+                route: { from: fareArr[i].route.from, to: fareArr[i].route.to },
+                round: round,
+                value: round === '往復' ? fareArr[i].value * 2 : fareArr[i].value
+            };
+            costArr.push(cost);
         }
+        // stateに保存する
         setArr(costArr);
     }, []);
 
