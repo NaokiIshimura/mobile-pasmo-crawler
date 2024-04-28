@@ -40,7 +40,7 @@ export default function Card({ history }: Props) {
                                 {[...Array(5)].map((_, idx) =>
                                     points[idx] ?
                                         <td className="w-16 h-16 p-3">
-                                            <div className="border border-2 border-[#ED77AC] rounded-full w-10 h-10 flex items-center justify-center text-[#ED77AC] text-xs">{points[idx]}</div>
+                                            <div className="pasmo-point-circle">{points[idx]}</div>
                                         </td>
                                         :
                                         <td className="w-16 h-16 p-3"></td>
@@ -50,7 +50,7 @@ export default function Card({ history }: Props) {
                                 {[...Array(5)].map((_, idx) =>
                                     points[idx + 5] ?
                                         <td className="w-16 h-16 p-3">
-                                            <div className="border border-2 border-[#ED77AC] rounded-full w-10 h-10 flex items-center justify-center text-[#ED77AC] text-xs">{points[idx + 5]}</div>
+                                            <div className="pasmo-point-circle">{points[idx + 5]}</div>
                                         </td>
                                         :
                                         <td className="w-16 h-16 p-3"></td>
@@ -60,7 +60,7 @@ export default function Card({ history }: Props) {
                                 {[...Array(5)].map((_, idx) =>
                                     points[idx + 10] ?
                                         <td className="w-16 h-16 p-3">
-                                            <div className="border border-2 border-[#ED77AC] rounded-full w-10 h-10 flex items-center justify-center text-[#ED77AC] text-xs">{points[idx + 10]}</div>
+                                            <div className="pasmo-point-circle">{points[idx + 10]}</div>
                                         </td>
                                         :
                                         <td className="w-16 h-16 p-3"></td>

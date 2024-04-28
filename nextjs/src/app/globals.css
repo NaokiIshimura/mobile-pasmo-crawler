@@ -58,3 +58,11 @@ td {
 .pasmo-button-small {
   @apply px-2 border border-[#ED77AC] bg-white hover:bg-gray-50 rounded text-xs font-thin text-[#ED77AC];
 }
+
+.pasmo-menu-card {
+  @apply w-80 h-40 flex items-center justify-center overflow-hidden border border-[#ED77AC] rounded rounded-xl shadow-lg bg-white hover:bg-gray-50 font-bold text-[#ED77AC];
+}
+
+.pasmo-point-circle {
+  @apply border border-2 border-[#ED77AC] rounded-full w-10 h-10 flex items-center justify-center text-[#ED77AC] text-xs
+}
