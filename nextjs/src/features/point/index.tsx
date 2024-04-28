@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { docClient, moderatorTableName } from "@/clients/dymamodb";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { TailSpin } from 'react-loader-spinner';
-import Table from './table';
+import Card from './card';
 
 type Props = {
     id: string;
@@ -38,7 +38,6 @@ export default function History({ id }: Props) {
             ExpressionAttributeValues: {
                 ':id': id,
             },
-            ScanIndexForward: false
         });
 
         const { Items } = await docClient.send(command);
@@ -57,7 +56,7 @@ export default function History({ id }: Props) {
     return (
         <div className="pasmo-block">
             <div className="pasmo-header flex justify-between">
-                <span>利用履歴</span>
+                <span>ポイントカード</span>
                 <input className="pasmo-button-small" type="submit" value="更新" onClick={reload} />
             </div>
             <div className="pasmo-body">
@@ -74,7 +73,7 @@ export default function History({ id }: Props) {
                             wrapperClass="flex justify-center"
                         />
                         :
-                        <Table history={history.slice().reverse()} />
+                        <Card history={history} />
                     }
                 </div>
             </div>

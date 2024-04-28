@@ -7,7 +7,9 @@ export default function Home() {
 
   return (
     <div className="px-10">
+
       <User id={id} />
+
       <div className='flex gap-5 my-5'>
         <Link href="/account">
           <div className='w-80 rounded overflow-hidden shadow-lg border border-[#ED77AC] rounded-xl bg-white hover:bg-gray-50'>
@@ -27,6 +29,15 @@ export default function Home() {
           <div className='w-80 rounded overflow-hidden shadow-lg border border-[#ED77AC] rounded-xl bg-white hover:bg-gray-50'>
             <div className='w-full h-40 flex items-center justify-center'>
               <span className='font-bold text-[#ED77AC]'>交通費</span>
+            </div>
+          </div>
+        </Link>
+      </div>
+      <div className='flex gap-5 my-5'>
+        <Link href="/point">
+          <div className='w-80 rounded overflow-hidden shadow-lg border border-[#ED77AC] rounded-xl bg-white hover:bg-gray-50'>
+            <div className='w-full h-40 flex items-center justify-center'>
+              <span className='font-bold text-[#ED77AC]'>ポイントカード</span>
             </div>
           </div>
         </Link>
