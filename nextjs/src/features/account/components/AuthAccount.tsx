@@ -44,13 +44,13 @@ export const AuthAccount = ({ id }: Props) => {
     return (
         <div className="pasmo-block">
             <div className="pasmo-header">
-                <span>アカウント登録</span>
+                <span>アカウント更新</span>
             </div>
             <div className="pasmo-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input className='mb-3 py-1 px-3 block border rounded outline-none' placeholder='メールアドレス' {...register("mailAddress", { required: true })} />
                     <input className='mb-3 py-1 px-3 block border rounded outline-none' placeholder='パスワード' {...register("password", { required: true })} />
-                    <input className="py-1 px-3 block pasmo-button" type="submit" value="登録" />
+                    <input className="py-1 px-3 block pasmo-button" type="submit" value="更新" />
                 </form>
             </div>
         </div>
