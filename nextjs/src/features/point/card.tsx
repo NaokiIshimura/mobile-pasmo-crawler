@@ -30,7 +30,7 @@ export default function Card({ history }: Props) {
     }, [history]);
 
     return (
-        <div className='m-5 w-96 rounded overflow-hidden shadow-lg border border-gray-300 bg-gray-100 rounded-xl'>
+        <div className='w-96 rounded overflow-hidden shadow-lg border border-gray-300 bg-gray-100 rounded-xl'>
             <div className='w-full h-64 flex items-center justify-center'>
                 <div>
                     <div className="pb-2 text-[#ED77AC] font-bold">

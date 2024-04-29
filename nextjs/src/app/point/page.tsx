@@ -1,7 +1,7 @@
 "use client"
 
 import User from '@/components/user'
-import DataLinkage from "@/features/dataLinkage";
+import Update from "@/features/update";
 import Point from "@/features/point"
 
 export default function Page() {
@@ -13,7 +13,7 @@ export default function Page() {
             <User id={id} />
             <div>
                 <div className="py-5">
-                    <DataLinkage id={id} />
+                    <Update id={id} />
                 </div>
 
                 <div className="py-5">

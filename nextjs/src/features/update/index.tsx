@@ -9,7 +9,7 @@ type Props = {
     id: string;
 }
 
-export default function DataLinkage({ id }: Props) {
+export default function Update({ id }: Props) {
 
     type AuthImageItem = {
         binary: string;
@@ -57,8 +57,8 @@ export default function DataLinkage({ id }: Props) {
     return (
         <div className="pasmo-block">
             <div className="pasmo-header flex justify-between">
-                <span>データ連携</span>
-                <input className="pasmo-button-small" type="submit" value="更新" onClick={invoke} />
+                <span>更新</span>
+                <input className="pasmo-button-small" type="submit" value="実行" onClick={invoke} />
             </div>
             <div className="pasmo-body">
                 {isLoading ?
@@ -84,7 +84,7 @@ export default function DataLinkage({ id }: Props) {
                                     </form>
                                 </div>
                                 :
-                                <span>更新ボタンをクリックしてください。</span>
+                                <span className='text-sm'>実行ボタンをクリックしてください。</span>
                         }
                     </>
                 }

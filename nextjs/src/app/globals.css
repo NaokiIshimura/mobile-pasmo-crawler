@@ -40,7 +40,7 @@ td {
 }
 
 .pasmo-block {
-  @apply w-[500px] border border-[#ED77AC] rounded;
+  @apply w-[600px] border border-[#ED77AC] rounded;
 }
 
 .pasmo-header {
@@ -48,7 +48,7 @@ td {
 }
 
 .pasmo-body {
-  @apply p-3;
+  @apply mx-5 p-3;
 }
 
 .pasmo-button {

@@ -38,9 +38,9 @@ export default function AuthAccount({ id }: Props) {
                 </div>
                 <div className="pasmo-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <input className='mb-3 py-1 px-3 block border rounded outline-none' placeholder='メールアドレス' {...register("mailAddress", { required: true })} />
-                        <input className='mb-3 py-1 px-3 block border rounded outline-none' placeholder='パスワード' {...register("password", { required: true })} />
-                        <input className="py-1 px-3 block pasmo-button" type="submit" value="更新" />
+                        <input className='my-3 mr-5 py-1 px-3 border rounded outline-none' placeholder='メールアドレス' {...register("mailAddress", { required: true })} />
+                        <input className='my-3 mr-5 py-1 px-3 border rounded outline-none' placeholder='パスワード' {...register("password", { required: true })} />
+                        <input className="py-1 px-3 pasmo-button" type="submit" value="更新" />
                     </form>
                 </div>
             </div>
