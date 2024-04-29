@@ -1,6 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { docClient, authenticatorTableName } from "@/clients/dymamodb";
-import { PutCommand } from "@aws-sdk/lib-dynamodb";
+import putAccount from "@/repositories/putAccount";
 
 type Props = {
     id: string;
@@ -23,19 +22,9 @@ export default function AuthAccount({ id }: Props) {
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
-        const command = new PutCommand({
-            TableName: authenticatorTableName,
-            Item: {
-                id: id,
-                dataType: 'account',
-                mailAddress: data.mailAddress,
-                password: data.password
-            }
-        });
-
-        const response = await docClient.send(command);
-        // console.log(response);
-        // return response;
+        const mailAddress = data.mailAddress;
+        const password = data.password;
+        const response = await putAccount(id, mailAddress, password);
         if (response.$metadata.httpStatusCode === 200) {
             reset();
         }

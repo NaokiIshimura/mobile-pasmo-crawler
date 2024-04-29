@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { docClient, moderatorTableName } from "@/clients/dymamodb";
-import { QueryCommand } from "@aws-sdk/lib-dynamodb";
+import getHistory from '@/repositories/getHistory';
 import { TailSpin } from 'react-loader-spinner';
 import Card from './card';
 
@@ -30,20 +29,6 @@ export default function History({ id }: Props) {
             await reload();
         })()
     }, []);
-
-    const getHistory = async (id: string) => {
-        const command = new QueryCommand({
-            TableName: moderatorTableName,
-            KeyConditionExpression: 'id = :id',
-            ExpressionAttributeValues: {
-                ':id': id,
-            },
-        });
-
-        const { Items } = await docClient.send(command);
-        // console.log(Items);
-        return Items;
-    }
 
     const reload = async () => {
         setIsLoading(true);

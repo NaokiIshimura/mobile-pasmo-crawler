@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { InvokeCommand } from "@aws-sdk/client-lambda";
-import { client, crawlerFunctionName } from "@/clients/lambda";
-import { docClient, authenticatorTableName } from "@/clients/dymamodb";
-import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { useForm, SubmitHandler } from "react-hook-form";
+import runCrawler from '@/repositories/runCrawler';
+import getAuthImage from '@/repositories/getAuthImage';
+import putAuthImage from '@/repositories/putAutuImage';
 import { TailSpin } from 'react-loader-spinner';
 
 type Props = {
@@ -30,13 +29,7 @@ export default function DataLinkage({ id }: Props) {
     const invoke = async () => {
         // console.log('invoke');
         setIsLoading(true);
-
-        const command = new InvokeCommand({
-            FunctionName: crawlerFunctionName,
-            InvocationType: 'Event'
-        });
-        await client.send(command);
-
+        await runCrawler();
         for (let i = 0; i < 10; i++) {
             const authImage = await getAuthImage(id) as AuthImageItem;
             if (authImage?.binary) {
@@ -48,39 +41,14 @@ export default function DataLinkage({ id }: Props) {
         setIsLoading(false);
     }
 
-    const getAuthImage = async (id: string) => {
-        const command = new GetCommand({
-            TableName: authenticatorTableName,
-            Key: {
-                id: id,
-                dataType: 'authImage'
-            },
-        });
-
-        const { Item } = await docClient.send(command);
-        // console.log(Item);
-        return { binary: Item?.binary, text: Item?.text }
-    }
-
     type Inputs = {
         text: string;
     }
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
-        const command = new PutCommand({
-            TableName: authenticatorTableName,
-            Item: {
-                id: id,
-                dataType: 'authImage',
-                binary: '',
-                text: data.text
-            }
-        });
-
-        const response = await docClient.send(command);
-        // console.log(response);
-        // return response;
+        const text = data.text;
+        const response = await putAuthImage(id, text);
         if (response.$metadata.httpStatusCode === 200) {
             reset();
         }
