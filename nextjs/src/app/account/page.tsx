@@ -3,7 +3,7 @@
 import Account from "@/features/account"
 import User from '@/components/user'
 
-export default function Home() {
+export default function Page() {
 
   const id = 'testuser';
 

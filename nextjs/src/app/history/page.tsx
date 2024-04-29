@@ -2,9 +2,9 @@
 
 import User from '@/components/user'
 import DataLinkage from "@/features/dataLinkage";
-import Point from "@/features/point"
+import History from "@/features/history"
 
-export default function Home() {
+export default function Page() {
 
     const id = 'testuser';
 
@@ -17,7 +17,7 @@ export default function Home() {
                 </div>
 
                 <div className="py-5">
-                    <Point id={id} />
+                    <History id={id} />
                 </div>
             </div>
         </div>

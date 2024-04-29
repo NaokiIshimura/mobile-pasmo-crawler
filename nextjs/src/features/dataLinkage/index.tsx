@@ -45,7 +45,6 @@ export default function DataLinkage({ id }: Props) {
             }
             await new Promise((resolve) => setTimeout(resolve, 3000));
         }
-
         setIsLoading(false);
     }
 
@@ -59,7 +58,7 @@ export default function DataLinkage({ id }: Props) {
         });
 
         const { Item } = await docClient.send(command);
-        console.log(Item);
+        // console.log(Item);
         return { binary: Item?.binary, text: Item?.text }
     }
 
