@@ -29,8 +29,44 @@ body {
   }
 } */
 
+body {
+  @apply text-gray-500;
+}
+
 table,
 th,
 td {
-  @apply border p-3;
+  @apply border border-gray-300 px-3 py-2;
+}
+
+.pasmo-block {
+  @apply w-[600px] border border-[#ED77AC] rounded;
+}
+
+.pasmo-header {
+  @apply px-4 py-2 bg-[#ED77AC] font-bold text-white;
+}
+
+.pasmo-body {
+  @apply mx-5 p-3;
+}
+
+.pasmo-input {
+  @apply border rounded shadow outline-none
+}
+
+.pasmo-button {
+  @apply px-3 py-1 border border-[#ED77AC] rounded bg-white hover:bg-gray-50 shadow font-bold text-[#ED77AC];
+}
+
+.pasmo-button-small {
+  @apply px-2 border border-[#ED77AC] bg-white hover:bg-gray-50 rounded text-xs font-thin text-[#ED77AC];
+}
+
+.pasmo-menu-card {
+  @apply w-80 h-40 flex items-center justify-center overflow-hidden border border-[#ED77AC] rounded rounded-xl shadow-lg bg-white hover:bg-gray-50 font-bold text-[#ED77AC];
+}
+
+.pasmo-point-circle {
+  @apply border border-2 border-[#ED77AC] rounded-full w-10 h-10 flex items-center justify-center text-[#ED77AC] text-xs
 }

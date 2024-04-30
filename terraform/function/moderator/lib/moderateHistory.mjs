@@ -44,12 +44,12 @@ export const moderateHistory = async (id, data) => {
                     }
                     break;
                 default:
-                    console.log('交通費');
+                    console.log('運賃');
                     await putItem({
                         id: id,
                         dataType: `card1#history#${selected.replace('/', '')}#${index.toString().padStart(4, '0')}`,
                         date: record[0],
-                        category: '交通費',
+                        category: '運賃',
                         value: Number(record[6].replace(',', '')),
                         detail: { in: record[2], out: record[4] }
                     });
