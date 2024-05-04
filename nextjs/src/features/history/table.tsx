@@ -32,7 +32,7 @@ export default function Table({ history }: Props) {
                             <tr key={idx}>
                                 <td>{h.date}</td>
                                 <td>{h.category}</td>
-                                <td>{h.value}</td>
+                                <td>¥{(h.value > 0 ? h.value : h.value * -1).toLocaleString()}</td>
                                 <td>{h.detail ? `${h.detail.in} → ${h.detail.out}` : ''}</td>
                             </tr>
                         )

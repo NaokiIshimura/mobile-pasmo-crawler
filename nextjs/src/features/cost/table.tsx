@@ -109,7 +109,7 @@ export default function Table({ history }: Props) {
                                 <td>{a.transportation}</td>
                                 <td>{a.route.from}〜{a.route.to}</td>
                                 <td>{a.round}</td>
-                                <td>{a.value * -1}</td>
+                                <td>¥{(a.value * -1).toLocaleString()}</td>
                             </tr>
                         )
                     })
