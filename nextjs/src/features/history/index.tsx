@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import getHistory from '@/repositories/getHistory';
 import { TailSpin } from 'react-loader-spinner';
 import Table from './table';
+import useGetHistories from '@/api/getHistories';
 
 type Props = {
     id: string;
@@ -21,21 +22,33 @@ export default function History({ id }: Props) {
         };
     }
 
+    const { data, isLoading, refetch } = useGetHistories(id, 'card1');
+
     const [history, setHistory] = useState<HistoryItem[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         await reload();
+    //     })()
+    // }, []);
 
     useEffect(() => {
-        (async () => {
-            await reload();
-        })()
-    }, []);
+        setHistory(data);
+    }, [data]);
 
     const reload = async () => {
-        setIsLoading(true);
-        const history = await getHistory(id) as HistoryItem[];
-        setHistory(history);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setIsLoading(false);
+        // setIsLoading(true);
+        // const history = await getHistory(id) as HistoryItem[];
+        // setHistory(history);
+        // setHistory([]);
+        refetch()
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        // setIsLoading(false);
+    }
+
+    if (!history) {
+        return <></>
     }
 
     return (
