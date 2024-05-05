@@ -87,6 +87,8 @@ AWS_SECRET_ACCESS_KEY=xxxxx
 
 ### コマンド
 ```
+# コンテナビルド
 $ docker compose build
+# コンテナ起動
 $ docker compose up
 ```
