@@ -4,7 +4,7 @@ import {
 import axios from 'axios';
 
 function getHistories(id, card) {
-    return axios.get(`http://localhost:8081/accounts/${id}/cards/${card}`)
+    return axios.get(`http://localhost:8081/accounts/${id}/cards/${card}/histories`)
 }
 
 export default function useGetHistories(id, card) {

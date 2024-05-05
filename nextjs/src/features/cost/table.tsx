@@ -87,7 +87,11 @@ export default function Table({ history }: Props) {
         }
         // stateに保存する
         setArr(costArr);
-    }, []);
+    }, [history]);
+
+    if (history.length === 0 || arr.length === 0) {
+        return <></>
+    }
 
     return (
         <table className='w-full text-center'>
