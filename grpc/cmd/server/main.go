@@ -38,7 +38,7 @@ type Item struct {
 	Detail   Detail `dynamodbav:"detail"`
 }
 
-func (s *myServer) Hello(ctx context.Context, req *moderatorpb.HistoriesRequest) (*moderatorpb.HistoriesResponse, error) {
+func (s *myServer) GetHistories(ctx context.Context, req *moderatorpb.HistoriesRequest) (*moderatorpb.HistoriesResponse, error) {
 	// histories := []*moderatorpb.History{
 	// 	{
 	// 		ID:       req.GetId(),

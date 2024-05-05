@@ -11,7 +11,7 @@ package myapp;
 // サービスの定義
 service HistoriesService {
 	// サービスが持つメソッドの定義
-	rpc Hello (HistoriesRequest) returns (HistoriesResponse); 
+	rpc GetHistories (HistoriesRequest) returns (HistoriesResponse); 
 }
 
 // 型の定義

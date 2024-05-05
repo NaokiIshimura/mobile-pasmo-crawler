@@ -75,7 +75,7 @@ func main() {
 	router.GET("/accounts/:account/cards/:card/histories", func(c *gin.Context) {
 		account := c.Param("account")
 		card := c.Param("card")
-		// Hello関数を呼び出す
+		// GetHistories関数を呼び出す
 		json, err := getHistories(account, card)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -92,7 +92,7 @@ func getHistories(id string, card string) ([]byte, error) {
 		Id:   id,
 		Card: card,
 	}
-	res, err := client.Hello(context.Background(), req)
+	res, err := client.GetHistories(context.Background(), req)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
