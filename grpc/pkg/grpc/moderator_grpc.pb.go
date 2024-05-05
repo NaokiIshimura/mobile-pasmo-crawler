@@ -23,91 +23,91 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	HistoryService_Hello_FullMethodName = "/myapp.HistoryService/Hello"
+	HistoriesService_Hello_FullMethodName = "/myapp.HistoriesService/Hello"
 )
 
-// HistoryServiceClient is the client API for HistoryService service.
+// HistoriesServiceClient is the client API for HistoriesService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type HistoryServiceClient interface {
+type HistoriesServiceClient interface {
 	// サービスが持つメソッドの定義
-	Hello(ctx context.Context, in *HistoryRequest, opts ...grpc.CallOption) (*HistoryResponse, error)
+	Hello(ctx context.Context, in *HistoriesRequest, opts ...grpc.CallOption) (*HistoriesResponse, error)
 }
 
-type historyServiceClient struct {
+type historiesServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHistoryServiceClient(cc grpc.ClientConnInterface) HistoryServiceClient {
-	return &historyServiceClient{cc}
+func NewHistoriesServiceClient(cc grpc.ClientConnInterface) HistoriesServiceClient {
+	return &historiesServiceClient{cc}
 }
 
-func (c *historyServiceClient) Hello(ctx context.Context, in *HistoryRequest, opts ...grpc.CallOption) (*HistoryResponse, error) {
-	out := new(HistoryResponse)
-	err := c.cc.Invoke(ctx, HistoryService_Hello_FullMethodName, in, out, opts...)
+func (c *historiesServiceClient) Hello(ctx context.Context, in *HistoriesRequest, opts ...grpc.CallOption) (*HistoriesResponse, error) {
+	out := new(HistoriesResponse)
+	err := c.cc.Invoke(ctx, HistoriesService_Hello_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HistoryServiceServer is the server API for HistoryService service.
-// All implementations must embed UnimplementedHistoryServiceServer
+// HistoriesServiceServer is the server API for HistoriesService service.
+// All implementations must embed UnimplementedHistoriesServiceServer
 // for forward compatibility
-type HistoryServiceServer interface {
+type HistoriesServiceServer interface {
 	// サービスが持つメソッドの定義
-	Hello(context.Context, *HistoryRequest) (*HistoryResponse, error)
-	mustEmbedUnimplementedHistoryServiceServer()
+	Hello(context.Context, *HistoriesRequest) (*HistoriesResponse, error)
+	mustEmbedUnimplementedHistoriesServiceServer()
 }
 
-// UnimplementedHistoryServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedHistoryServiceServer struct {
+// UnimplementedHistoriesServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedHistoriesServiceServer struct {
 }
 
-func (UnimplementedHistoryServiceServer) Hello(context.Context, *HistoryRequest) (*HistoryResponse, error) {
+func (UnimplementedHistoriesServiceServer) Hello(context.Context, *HistoriesRequest) (*HistoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
-func (UnimplementedHistoryServiceServer) mustEmbedUnimplementedHistoryServiceServer() {}
+func (UnimplementedHistoriesServiceServer) mustEmbedUnimplementedHistoriesServiceServer() {}
 
-// UnsafeHistoryServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HistoryServiceServer will
+// UnsafeHistoriesServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to HistoriesServiceServer will
 // result in compilation errors.
-type UnsafeHistoryServiceServer interface {
-	mustEmbedUnimplementedHistoryServiceServer()
+type UnsafeHistoriesServiceServer interface {
+	mustEmbedUnimplementedHistoriesServiceServer()
 }
 
-func RegisterHistoryServiceServer(s grpc.ServiceRegistrar, srv HistoryServiceServer) {
-	s.RegisterService(&HistoryService_ServiceDesc, srv)
+func RegisterHistoriesServiceServer(s grpc.ServiceRegistrar, srv HistoriesServiceServer) {
+	s.RegisterService(&HistoriesService_ServiceDesc, srv)
 }
 
-func _HistoryService_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HistoryRequest)
+func _HistoriesService_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HistoriesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HistoryServiceServer).Hello(ctx, in)
+		return srv.(HistoriesServiceServer).Hello(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HistoryService_Hello_FullMethodName,
+		FullMethod: HistoriesService_Hello_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HistoryServiceServer).Hello(ctx, req.(*HistoryRequest))
+		return srv.(HistoriesServiceServer).Hello(ctx, req.(*HistoriesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// HistoryService_ServiceDesc is the grpc.ServiceDesc for HistoryService service.
+// HistoriesService_ServiceDesc is the grpc.ServiceDesc for HistoriesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var HistoryService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "myapp.HistoryService",
-	HandlerType: (*HistoryServiceServer)(nil),
+var HistoriesService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "myapp.HistoriesService",
+	HandlerType: (*HistoriesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Hello",
-			Handler:    _HistoryService_Hello_Handler,
+			Handler:    _HistoriesService_Hello_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -9,15 +9,19 @@ option go_package = "pkg/grpc";
 package myapp;
 
 // サービスの定義
-service HistoryService {
+service HistoriesService {
 	// サービスが持つメソッドの定義
-	rpc Hello (HistoryRequest) returns (HistoryResponse); 
+	rpc Hello (HistoriesRequest) returns (HistoriesResponse); 
 }
 
 // 型の定義
-message HistoryRequest {
+message HistoriesRequest {
 	string id = 1;
     string card = 2;
+}
+
+message HistoriesResponse {
+	repeated History histories = 1;
 }
 
 message Detail {
@@ -32,8 +36,4 @@ message History {
 	string Date = 4;
 	int32 Value = 5;
 	Detail Detail = 6;
-}
-
-message HistoryResponse {
-	repeated History histories = 1;
 }

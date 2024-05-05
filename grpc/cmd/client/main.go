@@ -30,7 +30,7 @@ type Item struct {
 }
 
 var (
-	client moderatorpb.HistoryServiceClient
+	client moderatorpb.HistoriesServiceClient
 )
 
 func main() {
@@ -55,7 +55,7 @@ func main() {
 	defer conn.Close()
 
 	// gRPCクライアントを生成
-	client = moderatorpb.NewHistoryServiceClient(conn)
+	client = moderatorpb.NewHistoriesServiceClient(conn)
 
 	// APIサーバ
 	router := gin.Default()
@@ -88,7 +88,7 @@ func main() {
 
 func getHistories(id string, card string) ([]byte, error) {
 
-	req := &moderatorpb.HistoryRequest{
+	req := &moderatorpb.HistoriesRequest{
 		Id:   id,
 		Card: card,
 	}

@@ -21,7 +21,7 @@ import (
 )
 
 type myServer struct {
-	moderatorpb.UnimplementedHistoryServiceServer
+	moderatorpb.UnimplementedHistoriesServiceServer
 }
 
 type Detail struct {
@@ -38,7 +38,7 @@ type Item struct {
 	Detail   Detail `dynamodbav:"detail"`
 }
 
-func (s *myServer) Hello(ctx context.Context, req *moderatorpb.HistoryRequest) (*moderatorpb.HistoryResponse, error) {
+func (s *myServer) Hello(ctx context.Context, req *moderatorpb.HistoriesRequest) (*moderatorpb.HistoriesResponse, error) {
 	// histories := []*moderatorpb.History{
 	// 	{
 	// 		ID:       req.GetId(),
@@ -70,7 +70,7 @@ func (s *myServer) Hello(ctx context.Context, req *moderatorpb.HistoryRequest) (
 		}
 		grpcHistories = append(grpcHistories, grpcHistory)
 	}
-	return &moderatorpb.HistoryResponse{
+	return &moderatorpb.HistoriesResponse{
 		Histories: grpcHistories,
 	}, nil
 }
@@ -92,7 +92,7 @@ func main() {
 	s := grpc.NewServer()
 
 	// 3. gRPCサーバーにGreetingServiceを登録
-	moderatorpb.RegisterHistoryServiceServer(s, NewMyServer())
+	moderatorpb.RegisterHistoriesServiceServer(s, NewMyServer())
 
 	// 4. サーバーリフレクションの設定
 	reflection.Register(s)
