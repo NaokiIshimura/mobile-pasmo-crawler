@@ -6,6 +6,7 @@
 ---        | ---
 terraform  | インフラ
 nextjs     | クライアント
+grpc       | gRPC クライアント/サーバ
 
 ---
 
@@ -71,4 +72,21 @@ $ npm install
 
 # 起動
 $ npm run dev
+```
+
+## gRPC
+
+### 準備
+
+#### envファイル
+```
+# grpc/.env
+AWS_ACCESS_KEY_ID=xxxxx
+AWS_SECRET_ACCESS_KEY=xxxxx
+```
+
+### コマンド
+```
+$ docker compose build
+$ docker compose up
 ```

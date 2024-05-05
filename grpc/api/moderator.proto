@@ -1,0 +1,39 @@
+// protoのバージョンの宣言
+syntax = "proto3";
+
+// protoファイルから自動生成させるGoのコードの置き先
+// (詳細は4章にて)
+option go_package = "pkg/grpc";
+
+// packageの宣言
+package myapp;
+
+// サービスの定義
+service HistoryService {
+	// サービスが持つメソッドの定義
+	rpc Hello (HistoryRequest) returns (HistoryResponse); 
+}
+
+// 型の定義
+message HistoryRequest {
+	string id = 1;
+    string card = 2;
+}
+
+message Detail {
+    string In = 1;
+    string Out = 2;
+}
+
+message History {
+    string ID = 1;
+    string DataType = 2;
+    string Category = 3;
+	string Date = 4;
+	int32 Value = 5;
+	Detail Detail = 6;
+}
+
+message HistoryResponse {
+	repeated History histories = 1;
+}

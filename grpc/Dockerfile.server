@@ -1,0 +1,13 @@
+FROM golang:1.22.2
+
+# docker composeで環境変数を設定する場合はコメントアウト
+# ENV AWS_ACCESS_KEY_ID xxxxx
+# ENV AWS_SECRET_ACCESS_KEY xxxxx
+
+WORKDIR /app
+
+COPY . /app
+
+EXPOSE 8081
+
+CMD ["go", "run", "cmd/server/main.go"]
