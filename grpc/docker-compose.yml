@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile.client
     ports:
       - "8080:8080"
+    env_file:
+      - .env.client
 
   server:
     build:
@@ -16,4 +18,4 @@ services:
     ports:
       - "8081:8081"
     env_file:
-      - .env
+      - .env.server

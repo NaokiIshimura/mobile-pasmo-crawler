@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	moderatorpb "sample/pkg/grpc"
 
 	"github.com/gin-contrib/cors"
@@ -38,10 +39,13 @@ func main() {
 
 	// gRPCサーバーとのコネクションを確立
 	// address := "localhost:8081"
-	// Dockerコンテナからホストへアクセスする場合は、以下をコメントアウトする
+	// Dockerコンテナからホストへアクセスする場合、
 	// address := "host.docker.internal:8081"
-	// DockerComposeで起動してる場合は、以下をコメントアウトする
-	address := "server:8081"
+	// DockerComposeで起動してる場合、
+	// address := "server:8081"
+	// 環境変数からホストを取得する場合、
+	address := os.Getenv("GRPC_SERVER")
+
 	conn, err := grpc.Dial(
 		address,
 
@@ -72,6 +76,8 @@ func main() {
 		},
 	}))
 
+	// REST API
+	// GET /accounts/:account/cards/:card/histories
 	router.GET("/accounts/:account/cards/:card/histories", func(c *gin.Context) {
 		account := c.Param("account")
 		card := c.Param("card")
@@ -81,13 +87,16 @@ func main() {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+		// レスポンスを返す
 		c.Data(http.StatusOK, "application/json; charset=utf-8", json)
 	})
 	router.Run(":8080")
 }
 
+// GetHistories関数を呼び出す
 func getHistories(id string, card string) ([]byte, error) {
 
+	// gRPCリクエスト
 	req := &moderatorpb.HistoriesRequest{
 		Id:   id,
 		Card: card,
@@ -97,11 +106,6 @@ func getHistories(id string, card string) ([]byte, error) {
 		fmt.Println(err)
 		return nil, err
 	}
-
-	// レスポンスの配列から1つずつ取り出して出力
-	// for _, history := range res.GetHistories() {
-	// 	fmt.Println(history)
-	// }
 
 	// レスポンスの配列から1つずつ取り出してItemにマッピング
 	var items []Item
@@ -123,7 +127,7 @@ func getHistories(id string, card string) ([]byte, error) {
 }
 
 // grpcのレスポンスをJSONに変換したとき
-// ローわーキャメルになるようにItem型に変換する
+// ローワーキャメルになるようにItem型に変換する
 func mapToItem(history *moderatorpb.History) Item {
 	return Item{
 		ID:       history.ID,

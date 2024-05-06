@@ -14,8 +14,13 @@ $ protoc --go_out=../pkg/grpc --go_opt=paths=source_relative \
 ## docker
 
 ### .env
+```
+# .env.client
+GRPC_SERVER=xxxxx
+```
 
 ```
+# .env.server
 AWS_ACCESS_KEY_ID=xxxxx
 AWS_SECRET_ACCESS_KEY=xxxxx
 ```

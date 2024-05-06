@@ -39,18 +39,9 @@ type Item struct {
 }
 
 func (s *myServer) GetHistories(ctx context.Context, req *moderatorpb.HistoriesRequest) (*moderatorpb.HistoriesResponse, error) {
-	// histories := []*moderatorpb.History{
-	// 	{
-	// 		ID:       req.GetId(),
-	// 		DataType: req.GetCard(),
-	// 	},
-	// 	{
-	// 		ID:       "aaa",
-	// 		DataType: "bbb",
-	// 	},
-	// }
 
-	histories, err := query(req.GetId(), req.GetCard())
+	// DynamoDBからItemsを取得する
+	histories, err := queryItems(req.GetId(), req.GetCard())
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +102,8 @@ func main() {
 	s.GracefulStop()
 }
 
-func query(id string, card string) ([]Item, error) {
+// DynamoDBからItemsを取得する
+func queryItems(id string, card string) ([]Item, error) {
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(), func(o *config.LoadOptions) error {
 		o.Region = "ap-northeast-1"
@@ -151,26 +143,6 @@ func query(id string, card string) ([]Item, error) {
 
 		items = append(items, pItems...)
 	}
-
-	// ログ出力
-	// fmt.Println(items)
-	// for _, item := range items {
-	// 	fmt.Println(item)
-	// 	fmt.Println(item.ID)
-	// 	fmt.Println(item.DataType)
-	// 	fmt.Println(item.Detail)
-	// 	fmt.Println(item.Detail.In)
-	// 	fmt.Println(item.Detail.Out)
-	// }
-
-	// JSONに変換
-	// jsonData, err := json.Marshal(items)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return nil, err
-	// }
-	// fmt.Println("json:")
-	// fmt.Printf("%s\n", jsonData)
 
 	return items, nil
 }

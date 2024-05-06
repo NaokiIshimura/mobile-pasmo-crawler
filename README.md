@@ -74,13 +74,20 @@ $ npm install
 $ npm run dev
 ```
 
-## gRPC
+---
+
+## grpc
 
 ### 準備
 
 #### envファイル
 ```
-# grpc/.env
+# grpc/.env.client
+GRPC_SERVER=xxxxx
+```
+
+```
+# grpc/.env.server
 AWS_ACCESS_KEY_ID=xxxxx
 AWS_SECRET_ACCESS_KEY=xxxxx
 ```
