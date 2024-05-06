@@ -113,9 +113,10 @@ func queryItems(id string, card string) ([]Item, error) {
 		panic(err)
 	}
 
+	tableName := os.Getenv("TABLE_NAME")
 	svc := dynamodb.NewFromConfig(cfg)
 	p := dynamodb.NewQueryPaginator(svc, &dynamodb.QueryInput{
-		TableName:              aws.String("mpc-default-moderator-table"),
+		TableName:              aws.String(tableName),
 		Limit:                  aws.Int32(30),
 		KeyConditionExpression: aws.String("id = :id and begins_with(dataType, :card)"),
 		ExpressionAttributeValues: map[string]types.AttributeValue{

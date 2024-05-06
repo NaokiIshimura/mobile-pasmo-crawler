@@ -23,6 +23,7 @@ GRPC_SERVER=xxxxx
 # .env.server
 AWS_ACCESS_KEY_ID=xxxxx
 AWS_SECRET_ACCESS_KEY=xxxxx
+TABLE_NAME=xxxxx
 ```
 
 ### client
