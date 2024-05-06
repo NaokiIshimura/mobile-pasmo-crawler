@@ -15,6 +15,11 @@ type HistoryItem = {
 }
 
 export default function Table({ history }: Props) {
+
+    if (history.length === 0) {
+        return <></>
+    }
+
     return (
         <table className='w-full text-center'>
             <thead>
@@ -32,8 +37,8 @@ export default function Table({ history }: Props) {
                             <tr key={idx}>
                                 <td>{h.date}</td>
                                 <td>{h.category}</td>
-                                <td>{h.value}</td>
-                                <td>{h.detail ? `${h.detail.in} → ${h.detail.out}` : ''}</td>
+                                <td>¥{(h.value > 0 ? h.value : h.value * -1).toLocaleString()}</td>
+                                <td>{h.category === '運賃' && h.detail ? `${h.detail.in} → ${h.detail.out}` : ''}</td>
                             </tr>
                         )
                     })

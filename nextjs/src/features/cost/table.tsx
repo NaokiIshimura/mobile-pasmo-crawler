@@ -87,7 +87,11 @@ export default function Table({ history }: Props) {
         }
         // stateに保存する
         setArr(costArr);
-    }, []);
+    }, [history]);
+
+    if (history.length === 0 || arr.length === 0) {
+        return <></>
+    }
 
     return (
         <table className='w-full text-center'>
@@ -109,7 +113,7 @@ export default function Table({ history }: Props) {
                                 <td>{a.transportation}</td>
                                 <td>{a.route.from}〜{a.route.to}</td>
                                 <td>{a.round}</td>
-                                <td>{a.value * -1}</td>
+                                <td>¥{(a.value * -1).toLocaleString()}</td>
                             </tr>
                         )
                     })

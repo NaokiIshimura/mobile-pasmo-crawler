@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import getHistory from '@/repositories/getHistory';
+import useGetHistories from '@/api/getHistories';
 import { TailSpin } from 'react-loader-spinner';
 import Table from './table';
 
@@ -22,20 +23,33 @@ export default function History({ id }: Props) {
     }
 
     const [history, setHistory] = useState<HistoryItem[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    // DynamoDBから直接Itemを取得する場合、以下をコメントアウト
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         await reload();
+    //     })()
+    // }, []);
+
+    // const reload = async () => {
+    //     setIsLoading(true);
+    //     const history = await getHistory(id) as HistoryItem[];
+    //     setHistory(history);
+    //     await new Promise((resolve) => setTimeout(resolve, 1000));
+    //     setIsLoading(false);
+    // }
+
+    // APIサーバからItemを取得する場合、以下をコメントアウト
+    const { data, isLoading, refetch } = useGetHistories(id, 'card1');
 
     useEffect(() => {
-        (async () => {
-            await reload();
-        })()
-    }, []);
+        setHistory(data);
+    }, [data]);
 
     const reload = async () => {
-        setIsLoading(true);
-        const history = await getHistory(id) as HistoryItem[];
-        setHistory(history);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setIsLoading(false);
+        refetch()
     }
 
     return (

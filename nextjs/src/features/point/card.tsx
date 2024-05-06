@@ -29,6 +29,10 @@ export default function Card({ history }: Props) {
         setPoints(uniqueDates);
     }, [history]);
 
+    if (history.length === 0) {
+        return <></>
+    }
+
     return (
         <div className='w-96 rounded overflow-hidden shadow-lg border border-gray-300 bg-gray-100 rounded-xl'>
             <div className='w-full h-64 flex items-center justify-center'>

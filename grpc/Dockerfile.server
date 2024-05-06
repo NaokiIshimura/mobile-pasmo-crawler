@@ -1,0 +1,9 @@
+FROM golang:1.22.2
+
+WORKDIR /app
+
+COPY . /app
+
+EXPOSE 8081
+
+CMD ["go", "run", "cmd/server/main.go"]
