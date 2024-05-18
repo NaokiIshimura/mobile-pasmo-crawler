@@ -33,7 +33,7 @@ func TestHandleRequest(t *testing.T) {
 					},
 				},
 			},
-			wantErr: false, // テストケースごとに期待されるエラーの有無
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {

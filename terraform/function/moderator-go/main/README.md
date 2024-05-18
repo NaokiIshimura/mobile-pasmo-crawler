@@ -20,6 +20,12 @@ $ zip bootstrap.zip bootstrap
 
 ## SQS Event
 
+### SQSメッセージ
+```
+{"id":"testuser","dataType":"card1#history#parsed","timestamp":"1714363438","result":{"head":{"title":"モバイルPASMO＞SF（電子マネー）残額履歴"},"body":{"select":{"selected":"2024/05"},"table":[["月/日","種別","利用場所","種別","利用場所","残額","差額"],["05/01","入","yyy","出","xxx","¥127","-406"],["05/01","入","xxx","出","yyy","¥533","-406"]]}},"url":"https://www.mobile.pasmo.jp/iq/ir/SuicaDisp.aspx?returnId=SFRCMMEPC03"}
+```
+
+### Lambdaテスト
 ```
 {
   "Records": [
@@ -28,6 +34,7 @@ $ zip bootstrap.zip bootstrap
 }
   ]
 }
+
 
 ```
 

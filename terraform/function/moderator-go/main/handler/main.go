@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -29,25 +28,27 @@ type Input struct {
 }
 
 func HandleRequest(ctx context.Context, sqsEvent events.SQSEvent) error {
-	fmt.Println("HandleRequest! >>>")
-
 	fmt.Println("sqsEvent:", sqsEvent)
-	// レコード (メッセージ) 単位でループ
+	// レコード (SQSメッセージ) 単位でループさせる
 	for _, record := range sqsEvent.Records {
-		fmt.Println("record:", record)
-		// インプットメッセージを受け取って構造体にマッピング
-		b := []byte(record.Body)
-		var input Input
-		err := json.Unmarshal(b, &input)
+		// fmt.Println("record:", record)
+
+		// SQSメッセージを構造体にマッピングする
+		input, err := mapBodyToInput(record.Body)
 		if err != nil {
-			fmt.Printf("%s\n", err)
+			fmt.Printf("Error mapBodyToInput: %s\n", err)
+			continue
 		}
-		Test1(input)
-		// PrintJson(input)
 
+		// Inputの内容をログ出力する
+		// PrintInput(input)
+
+		// InputデータをDynamoDBに書き込む
+		err = WriteInputData(input)
+		if err != nil {
+			fmt.Printf("Error WriteInputData: %s\n", err)
+			continue
+		}
 	}
-
-	fmt.Println("<<< HandleRequest!")
-	// message := fmt.Sprintf("Hello!!")
 	return nil
 }

@@ -28,8 +28,59 @@ type Item struct {
 	Detail   Detail `dynamodbav:"detail"`
 }
 
+// デバッグ用
+// Inputの内容をログ出力する
+func PrintInput(input Input) error {
+	fmt.Println("PrintInput >>>")
+	fmt.Println("input:", input)
+	fmt.Println("input.ID:", input.ID)
+	fmt.Println("input.DataType:", input.DataType)
+	fmt.Println("input.Timestamp:", input.Timestamp)
+	fmt.Println("input.URL:", input.URL)
+	fmt.Println("input.Result.Head:", input.Result.Head)
+	fmt.Println("input.Result.Body.Select.Selected:", input.Result.Body.Select.Selected)
+	fmt.Println("<<< PrintInput")
+	return nil
+}
+
+// SQSメッセージを構造体にマッピングする
+func mapBodyToInput(body string) (Input, error) {
+	var input Input
+	err := json.Unmarshal([]byte(body), &input)
+	return input, err
+}
+
+// InputデータをDynamoDBに書き込む
+func WriteInputData(input Input) error {
+	// fmt.Println("input:", input)
+	for index, record := range input.Result.Body.Table {
+
+		fmt.Print("index:", index)
+		fmt.Println(" / record:", record)
+
+		if index > 0 {
+			// detailをセットする
+			detail, err := SetDetail(record)
+			if err != nil {
+				panic(err)
+			}
+			// fmt.Println("detail:", detail)
+
+			// itemを生成する
+			item, err := SetItem(index, input, record, detail)
+			if err != nil {
+				panic(err)
+			}
+			// fmt.Println("item:", item)
+
+			// itemをDynamoDBへ書き込む
+			PutItem(item)
+		}
+	}
+	return nil
+}
+
 func SetDetail(record []interface{}) (Detail, error) {
-	fmt.Println(" / record:", record)
 
 	// 型アサーションを使って interface{} を string に変換
 	in, ok := record[2].(string)
@@ -49,10 +100,11 @@ func SetDetail(record []interface{}) (Detail, error) {
 }
 
 func SetItem(index int, input Input, record []interface{}, detail Detail) (Item, error) {
-	fmt.Println("SetItem:", index)
-	fmt.Println("SetItem:", input)
-	fmt.Println("SetItem:", record)
-	fmt.Println("SetItem:", detail)
+
+	// fmt.Println("SetItem:", index)
+	// fmt.Println("SetItem:", input)
+	// fmt.Println("SetItem:", record)
+	// fmt.Println("SetItem:", detail)
 
 	date, ok := record[0].(string)
 	if !ok {
@@ -75,11 +127,6 @@ func SetItem(index int, input Input, record []interface{}, detail Detail) (Item,
 		}
 	}
 
-	// // record[6]の値を取得し、正の数に変換する
-	// valueStr, ok := record[6].(string)
-	// if !ok {
-	// 	return Item{}, fmt.Errorf("failed to convert record[6] to string")
-	// }
 	// カンマを削除
 	valueStr = strings.Replace(valueStr, ",", "", -1)
 	// プラス記号を削除
@@ -95,7 +142,7 @@ func SetItem(index int, input Input, record []interface{}, detail Detail) (Item,
 		value = -value // 負の数を正に変換する
 	}
 
-	fmt.Println("value:", value)
+	// fmt.Println("value:", value)
 
 	var item Item
 	item.ID = input.ID
@@ -117,24 +164,15 @@ func SetItem(index int, input Input, record []interface{}, detail Detail) (Item,
 }
 
 func PutItem(item Item) error {
-	fmt.Println("putItem:", item)
-
-	// // セッションの作成
-	// sess := session.Must(session.NewSessionWithOptions(session.Options{
-	// 	SharedConfigState: session.SharedConfigEnable,
-	// }))
-
-	// // DynamoDBクライアントの作成
-	// svc := dynamodb.New(sess)
+	// fmt.Println("putItem:", item)
 
 	detailMap := map[string]types.AttributeValue{
 		"in":  &types.AttributeValueMemberS{Value: item.Detail.In},
 		"out": &types.AttributeValueMemberS{Value: item.Detail.Out},
 	}
 
-	// var TableName = "mpc-default-moderator-go-table"
 	var TableName = os.Getenv("TABLE_NAME")
-	fmt.Println("TableName:", TableName)
+	// fmt.Println("TableName:", TableName)
 
 	// PutItem入力の作成
 	input := &dynamodb.PutItemInput{
@@ -161,13 +199,6 @@ func PutItem(item Item) error {
 		TableName: aws.String(TableName),
 	}
 
-	// アイテムをDynamoDBに書き込む
-	// _, err := svc.PutItem(input)
-	// if err != nil {
-	// 	fmt.Println("err:", err)
-	// 	return err
-	// }
-
 	cfg, err := config.LoadDefaultConfig(context.TODO(), func(o *config.LoadOptions) error {
 		o.Region = "ap-northeast-1"
 		return nil
@@ -179,73 +210,9 @@ func PutItem(item Item) error {
 	svc := dynamodb.NewFromConfig(cfg)
 
 	_, err = svc.PutItem(context.TODO(), input)
-
 	if err != nil {
 		panic(err)
 	}
-
-	return nil
-}
-
-func Test1(input Input) error {
-	fmt.Println("test1 >>>")
-	// fmt.Printf("%s\n", input)
-	fmt.Println("input:", input)
-	fmt.Println("input.ID:", input.ID)
-	fmt.Println("input.DataType:", input.DataType)
-	fmt.Println("input.Timestamp:", input.Timestamp)
-	fmt.Println("input.URL:", input.URL)
-	fmt.Println("input.Result.Head:", input.Result.Head)
-	fmt.Println("input.Result.Body.Select.Selected:", input.Result.Body.Select.Selected)
-
-	// fmt.Println("input.Result.Body.Table:", input.Result.Body.Table)
-	Test2(input, input.Result.Body.Table)
-
-	fmt.Println("<<< test1")
-	return nil
-}
-
-func Test2(input Input, table [][]interface{}) error {
-	// fmt.Println("table:", table)
-	for index, record := range table {
-		if index == 0 {
-			fmt.Println("--------------------")
-			fmt.Println("table header")
-			fmt.Print("index:", index)
-			fmt.Println("--------------------")
-			fmt.Println("table body")
-		} else {
-			fmt.Print("index:", index)
-			// detail
-			detail, err := SetDetail(record)
-			if err != nil {
-				panic(err)
-			}
-			fmt.Println("detail:", detail)
-			// item
-			item, err := SetItem(index, input, record, detail)
-			if err != nil {
-				panic(err)
-			}
-
-			fmt.Println("item:", item)
-			PutItem(item)
-		}
-	}
-	return nil
-}
-
-func PrintJson(input Input) error {
-	fmt.Println("test2 >>>")
-	// JSONに変換
-	jsonData, err := json.Marshal(input)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	fmt.Println("json:")
-	fmt.Printf("%s\n", jsonData)
-	fmt.Println("<<< test2")
 
 	return nil
 }
