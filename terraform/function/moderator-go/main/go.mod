@@ -21,4 +21,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.28.7 // indirect
 	github.com/aws/smithy-go v1.20.2 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/jteeuwen/go-bindata v3.0.7+incompatible // indirect
+	github.com/kazuph/go-binenv v0.0.0-20170113130456-64b2b6e919dd // indirect
 )

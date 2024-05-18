@@ -2,12 +2,16 @@ package handler
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/aws/aws-lambda-go/events"
 )
 
 func TestHandleRequest(t *testing.T) {
+	// 環境変数
+	os.Setenv("TABLE_NAME", "mpc-default-moderator-go-table")
+	// 引数
 	type args struct {
 		ctx      context.Context
 		sqsEvent events.SQSEvent
@@ -20,7 +24,7 @@ func TestHandleRequest(t *testing.T) {
 		{
 			name: "Test case 1",
 			args: args{
-				ctx: context.TODO(), // または必要に応じて適切なコンテキストを作成する
+				ctx: context.TODO(),
 				sqsEvent: events.SQSEvent{
 					Records: []events.SQSMessage{
 						{
@@ -29,9 +33,8 @@ func TestHandleRequest(t *testing.T) {
 					},
 				},
 			},
-			wantErr: false, // テストケースごとに期待されるエラーの有無を設定します
+			wantErr: false, // テストケースごとに期待されるエラーの有無
 		},
-		// ここに新しいテストケースを追加します
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -131,6 +132,10 @@ func PutItem(item Item) error {
 		"out": &types.AttributeValueMemberS{Value: item.Detail.Out},
 	}
 
+	// var TableName = "mpc-default-moderator-go-table"
+	var TableName = os.Getenv("TABLE_NAME")
+	fmt.Println("TableName:", TableName)
+
 	// PutItem入力の作成
 	input := &dynamodb.PutItemInput{
 		Item: map[string]types.AttributeValue{
@@ -153,7 +158,7 @@ func PutItem(item Item) error {
 				Value: detailMap,
 			},
 		},
-		TableName: aws.String("mpc-default-moderator-go-table"),
+		TableName: aws.String(TableName),
 	}
 
 	// アイテムをDynamoDBに書き込む
