@@ -61,3 +61,10 @@ module "moderator" {
   source_dir     = "./function/moderator"
   stream_enabled = true
 }
+
+module "moderator_go" {
+  source         = "./modules/moderator-go"
+  prefix         = "${local.prefix}-moderator-go"
+  source_dir     = "./function/moderator-go"
+  stream_enabled = true
+}
