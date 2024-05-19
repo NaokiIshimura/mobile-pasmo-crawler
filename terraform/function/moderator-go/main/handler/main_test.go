@@ -28,7 +28,7 @@ func TestHandleRequest(t *testing.T) {
 				sqsEvent: events.SQSEvent{
 					Records: []events.SQSMessage{
 						{
-							Body: "{\"id\":\"testuser\",\"dataType\":\"card1#history#parsed\",\"timestamp\":\"1714363438\",\"result\":{\"head\":{\"title\":\"モバイルPASMO＞SF（電子マネー）残額履歴\"},\"body\":{\"select\":{\"selected\":\"2024/05\"},\"table\":[[\"月/日\",\"種別\",\"利用場所\",\"種別\",\"利用場所\",\"残額\",\"差額\"],[\"05/01\",\"入\",\"恵比寿\",\"出\",\"新小岩\",\"¥127\",\"-406\"],[\"05/01\",\"入\",\"新小岩\",\"出\",\"恵比寿\",\"¥533\",\"-406\"]]}},\"url\":\"https://www.mobile.pasmo.jp/iq/ir/SuicaDisp.aspx?returnId=SFRCMMEPC03\"}",
+							Body: "{\"id\":\"testuser\",\"dataType\":\"card1#history#parsed\",\"timestamp\":\"1714363438\",\"result\":{\"head\":{\"title\":\"モバイルPASMO＞SF（電子マネー）残額履歴\"},\"body\":{\"select\":{\"selected\":\"2024/05\"},\"table\":[[\"月/日\",\"種別\",\"利用場所\",\"種別\",\"利用場所\",\"残額\",\"差額\"],[\"05/01\",\"入\",\"xxx\",\"出\",\"yyy\",\"¥127\",\"-406\"],[\"05/01\",\"入\",\"yyy\",\"出\",\"xxx\",\"¥533\",\"-406\"]]}},\"url\":\"https://www.mobile.pasmo.jp/iq/ir/SuicaDisp.aspx?returnId=SFRCMMEPC03\"}",
 						},
 					},
 				},
