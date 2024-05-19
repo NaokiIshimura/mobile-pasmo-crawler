@@ -60,7 +60,7 @@ NEXT_PUBLIC_AUTHENTICATOR_TABLE_NAME=mpc-default-authenticator-table
 NEXT_PUBLIC_CRAWLER_TABLE_NAME=mpc-default-crawler-table
 NEXT_PUBLIC_CRAWLER_FUNCTION_NAME=mpc-default-crawler-function
 NEXT_PUBLIC_MODERATOR_TABLE_NAME=mpc-default-moderator-table
-
+NEXT_PUBLIC_GRPC_SERVER_HOST_NAME=localhost:8080
 ```
 
 ### コマンド
