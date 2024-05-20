@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    output: 'standalone',
+    env: {
+        NEXT_PUBLIC_REGION: process.env.NEXT_PUBLIC_REGION,
+        NEXT_PUBLIC_ACCESS_KEY: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        NEXT_PUBLIC_SECRET_ACCESS_KEY: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
+        NEXT_PUBLIC_AUTHENTICATOR_TABLE_NAME: process.env.NEXT_PUBLIC_AUTHENTICATOR_TABLE_NAME,
+        NEXT_PUBLIC_CRAWLER_TABLE_NAME: process.env.NEXT_PUBLIC_CRAWLER_TABLE_NAME,
+        NEXT_PUBLIC_CRAWLER_FUNCTION_NAME: process.env.NEXT_PUBLIC_CRAWLER_FUNCTION_NAME,
+        NEXT_PUBLIC_MODERATOR_TABLE_NAME: process.env.NEXT_PUBLIC_MODERATOR_TABLE_NAME,
+        NEXT_PUBLIC_GRPC_SERVER: process.env.NEXT_PUBLIC_GRPC_SERVER
+    },
+};
 
 export default nextConfig;

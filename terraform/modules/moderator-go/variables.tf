@@ -3,12 +3,12 @@ variable "prefix" {
   type        = string
 }
 
-variable "table_arn" {
-  description = "dynamoDBテーブルのARN"
+variable "source_dir" {
+  description = "ソースディレクトリ"
   type        = string
 }
 
-variable "table_id" {
-  description = "dynamoDBテーブルのID"
-  type        = string
+variable "stream_enabled" {
+  description = "dynamoDB Stream 有効"
+  type        = bool
 }

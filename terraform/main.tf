@@ -44,11 +44,13 @@ module "crawler" {
 # # parser
 # ################################################################################
 module "parser" {
-  source              = "./modules/parser"
-  prefix              = "${local.prefix}-parser"
-  source_dir          = "./function/parser"
-  moderator_queue_arn = module.moderator.queue_arn
-  moderator_queue_url = module.moderator.queue_url
+  source     = "./modules/parser"
+  prefix     = "${local.prefix}-parser"
+  source_dir = "./function/parser"
+  # moderator_queue_arn = module.moderator.queue_arn
+  # moderator_queue_url = module.moderator.queue_url
+  moderator_queue_arn = module.moderator_go.queue_arn
+  moderator_queue_url = module.moderator_go.queue_url
   stream_enabled      = true
 }
 
@@ -59,5 +61,12 @@ module "moderator" {
   source         = "./modules/moderator"
   prefix         = "${local.prefix}-moderator"
   source_dir     = "./function/moderator"
+  stream_enabled = true
+}
+
+module "moderator_go" {
+  source         = "./modules/moderator-go"
+  prefix         = "${local.prefix}-moderator-go"
+  source_dir     = "./function/moderator-go"
   stream_enabled = true
 }

@@ -62,7 +62,8 @@ resource "aws_lambda_function" "main" {
   function_name = "${var.prefix}-function"
   role          = aws_iam_role.main.arn
   handler       = "lambda.handler"
-  runtime       = "nodejs20.x"
+  runtime       = "provided.al2"
+  architectures = ["arm64"]
 
   source_code_hash = data.archive_file.main.output_base64sha256
 
@@ -76,27 +77,49 @@ resource "aws_lambda_function" "main" {
   }
 }
 
-# stream
-resource "aws_lambda_function" "stream" {
-  filename      = data.archive_file.main.output_path
-  function_name = "${var.prefix}-stream"
-  role          = aws_iam_role.main.arn
-  handler       = "stream.handler"
-  runtime       = "nodejs20.x"
-
-  source_code_hash = data.archive_file.main.output_base64sha256
-
-  environment {
-    variables = {
-      MODERATOR_QUEUE_URL = var.moderator_queue_url
-    }
+resource "null_resource" "main" {
+  triggers = {
+    always_run = timestamp()
+  }
+  provisioner "local-exec" {
+    command = "cd ./function/moderator-go/main/ && GOOS=linux go build -o bootstrap"
   }
 }
 
 data "archive_file" "main" {
   type        = "zip"
-  source_dir  = var.source_dir
-  output_path = "archives/${var.prefix}.zip"
+  source_dir  = "${var.source_dir}/main"
+  output_path = "archives/${var.prefix}-main.zip"
+  depends_on  = [null_resource.main]
+}
+
+# stream
+resource "aws_lambda_function" "stream" {
+  filename      = data.archive_file.stream.output_path
+  function_name = "${var.prefix}-stream"
+  role          = aws_iam_role.main.arn
+  handler       = "stream.handler"
+  runtime       = "provided.al2"
+  architectures = ["arm64"]
+
+  source_code_hash = data.archive_file.stream.output_base64sha256
+}
+
+resource "null_resource" "stream" {
+  triggers = {
+    always_run = timestamp()
+  }
+  provisioner "local-exec" {
+    command = "cd ./function/moderator-go/stream/ && GOOS=linux go build -o bootstrap"
+  }
+}
+
+
+data "archive_file" "stream" {
+  type        = "zip"
+  source_dir  = "${var.source_dir}/stream"
+  output_path = "archives/${var.prefix}-stream.zip"
+  depends_on  = [null_resource.stream]
 }
 
 ########################################
@@ -148,7 +171,6 @@ data "aws_iam_policy_document" "main" {
     ]
     resources = [
       aws_sqs_queue.main.arn,
-      var.moderator_queue_arn,
     ]
   }
 
