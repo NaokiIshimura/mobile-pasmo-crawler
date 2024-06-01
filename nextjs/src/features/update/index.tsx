@@ -4,6 +4,7 @@ import runCrawler from '@/repositories/runCrawler';
 import getAuthImage from '@/repositories/getAuthImage';
 import putAuthImage from '@/repositories/putAutuImage';
 import { TailSpin } from 'react-loader-spinner';
+import useGetAuthImage from '@/api/getAuthImage';
 import usePutAuthImage from '@/api/putAuthImage';
 
 type Props = {
@@ -20,6 +21,7 @@ export default function Update({ id }: Props) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [authImage, setAuthImage] = useState<AuthImageItem | undefined>(undefined);
     const { mutateAsync } = usePutAuthImage();
+    const { data, refetch } = useGetAuthImage(id);
 
     const {
         register,
@@ -33,11 +35,21 @@ export default function Update({ id }: Props) {
         setIsLoading(true);
         await runCrawler();
         for (let i = 0; i < 10; i++) {
-            const authImage = await getAuthImage(id) as AuthImageItem;
-            if (authImage?.binary) {
-                setAuthImage(authImage);
+
+            // DynamoDBクライアント
+            // const authImage = await getAuthImage(id) as AuthImageItem;
+            // if (authImage?.binary) {
+            //     setAuthImage(authImage);
+            //     break;
+            // }
+
+            // APIサーバ
+            await refetch();
+            if (data?.binary) {
+                setAuthImage(data);
                 break;
             }
+
             await new Promise((resolve) => setTimeout(resolve, 3000));
         }
         setIsLoading(false);

@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-query'
 import axios from 'axios';
 
-const server = 'localhost:8082';
+const server = process.env.NEXT_PUBLIC_API_SERVER_HOST_NAME;
 
 if (!server) {
     throw new Error('Environment variables are not set properly');
