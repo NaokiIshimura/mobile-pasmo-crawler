@@ -4,6 +4,7 @@ import runCrawler from '@/repositories/runCrawler';
 import getAuthImage from '@/repositories/getAuthImage';
 import putAuthImage from '@/repositories/putAutuImage';
 import { TailSpin } from 'react-loader-spinner';
+import usePutAuthImage from '@/api/putAuthImage';
 
 type Props = {
     id: string;
@@ -18,6 +19,7 @@ export default function Update({ id }: Props) {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [authImage, setAuthImage] = useState<AuthImageItem | undefined>(undefined);
+    const { mutateAsync } = usePutAuthImage();
 
     const {
         register,
@@ -47,10 +49,20 @@ export default function Update({ id }: Props) {
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
-        const text = data.text;
-        const response = await putAuthImage(id, text);
-        if (response.$metadata.httpStatusCode === 200) {
+
+        // DynamoDB Client
+        // const text = data.text;
+        // const response = await putAuthImage(id, text);
+        // if (response.$metadata.httpStatusCode === 200) {
+        //     reset();
+        // }
+
+        // APIサーバ
+        try {
+            await mutateAsync({ ...data, id: id, dataType: 'authImage', binary: "" })
             reset();
+        } catch (error) {
+            console.error(error)
         }
     }
 
