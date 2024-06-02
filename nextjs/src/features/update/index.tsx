@@ -20,6 +20,8 @@ export default function Update({ id }: Props) {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [authImage, setAuthImage] = useState<AuthImageItem | undefined>(undefined);
+
+    // APIサーバ
     const { mutateAsync } = usePutAuthImage();
     const { data, refetch } = useGetAuthImage(id);
 
@@ -44,7 +46,7 @@ export default function Update({ id }: Props) {
             // }
 
             // APIサーバ
-            await refetch();
+            const { data } = await refetch();
             if (data?.binary) {
                 setAuthImage(data);
                 break;

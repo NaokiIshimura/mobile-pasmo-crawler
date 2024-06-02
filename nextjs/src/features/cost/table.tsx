@@ -29,6 +29,8 @@ export default function Table({ history }: Props) {
     const [arr, setArr] = useState<CostData[]>([]);
 
     useEffect(() => {
+        if (!history) return
+
         interface HistoryItem {
             date: string;
             category: string;
@@ -89,7 +91,7 @@ export default function Table({ history }: Props) {
         setArr(costArr);
     }, [history]);
 
-    if (history.length === 0 || arr.length === 0) {
+    if (!history || history.length === 0 || arr.length === 0) {
         return <></>
     }
 

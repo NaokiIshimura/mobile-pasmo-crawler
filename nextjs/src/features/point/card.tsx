@@ -21,6 +21,8 @@ export default function Card({ history }: Props) {
     const [points, setPoints] = useState<string[]>([]);
 
     useEffect(() => {
+        if (!history) return
+
         const filteredDates = history
             .filter(h => h.category === '物販')
             .map(h => h.date)
@@ -29,7 +31,7 @@ export default function Card({ history }: Props) {
         setPoints(uniqueDates);
     }, [history]);
 
-    if (history.length === 0) {
+    if (!history || history.length === 0) {
         return <></>
     }
 
