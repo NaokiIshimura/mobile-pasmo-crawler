@@ -100,3 +100,25 @@ $ docker compose build
 # コンテナ起動
 $ docker compose up
 ```
+
+---
+
+## api
+
+### 準備
+
+#### envファイル
+```
+# api/.env
+TABLE_NAME=xxxxx
+AWS_ACCESS_KEY_ID=xxxxx
+AWS_SECRET_ACCESS_KEY=xxxxx
+```
+
+### コマンド
+```
+# コンテナビルド
+$ docker compose build
+# コンテナ起動
+$ docker compose up
+```
