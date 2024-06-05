@@ -9,7 +9,7 @@ import (
 )
 
 // ==========================================================================================
-// main
+// function
 // ==========================================================================================
 
 // APIサーバを起動する
@@ -17,6 +17,15 @@ func Start() {
 
 	fmt.Println("start API Server")
 
+	// Routerを設定する
+	router := GetRouter()
+
+	// サーバを起動する
+	router.Run(":8080")
+}
+
+// Routerを設定する
+func GetRouter() *gin.Engine {
 	// APIサーバ
 	router := gin.Default()
 
@@ -43,6 +52,5 @@ func Start() {
 	router.GET("/accounts/:account/authImage", controller.GetAuthImage)
 	router.POST("/accounts/:account/authImage", controller.PostAuthImage)
 
-	// ポート
-	router.Run(":8080")
+	return router
 }
