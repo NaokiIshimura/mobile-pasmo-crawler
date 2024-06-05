@@ -181,6 +181,12 @@ resource "aws_lambda_function" "ip_restrict_lambda" {
   runtime       = "nodejs20.x"
 
   source_code_hash = data.archive_file.authorizer.output_base64sha256
+
+  environment {
+    variables = {
+      ALLOW_IP_ADDRESS = var.allow_ip_address
+    }
+  }
 }
 
 data "archive_file" "authorizer" {

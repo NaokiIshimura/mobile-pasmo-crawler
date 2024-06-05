@@ -9,6 +9,9 @@ export const handler = async (event, context) => {
   // const sourceIp = event.requestContext.http.sourceIp;
   // console.log('sourceIp', sourceIp);
 
+  // アクセスを許可するIPアドレス（"xxx.xxx.xxx.xxx/32"）
+  const allow_ip_address = process.env.ALLOW_IP_ADDRESS;
+
   const response = {
     principalId: "AllowExecuteApiInvoke",
     policyDocument: {
@@ -21,7 +24,7 @@ export const handler = async (event, context) => {
           Condition: {
             IpAddress: {
               "aws:SourceIp": [
-                "150.246.60.77/32"
+                allow_ip_address
               ]
             }
           }
