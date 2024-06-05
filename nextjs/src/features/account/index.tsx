@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import putAccount from "@/repositories/putAccount";
+import usePutAccount from '@/api/putAccount';
 
 type Props = {
     id: string;
@@ -12,6 +13,8 @@ export default function AuthAccount({ id }: Props) {
         password: string;
     }
 
+    const { mutateAsync } = usePutAccount();
+
     const {
         register,
         handleSubmit,
@@ -19,14 +22,23 @@ export default function AuthAccount({ id }: Props) {
         formState: { errors },
     } = useForm<Inputs>()
 
-
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
-        const mailAddress = data.mailAddress;
-        const password = data.password;
-        const response = await putAccount(id, mailAddress, password);
-        if (response.$metadata.httpStatusCode === 200) {
+
+        // DynamoDB Client
+        // const mailAddress = data.mailAddress;
+        // const password = data.password;
+        // const response = await putAccount(id, mailAddress, password);
+        // if (response.$metadata.httpStatusCode === 200) {
+        //     reset();
+        // }
+
+        // APIサーバ
+        try {
+            await mutateAsync({ ...data, id: id, dataType: 'account' })
             reset();
+        } catch (error) {
+            console.error(error)
         }
     }
 

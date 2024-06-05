@@ -4,6 +4,8 @@ import runCrawler from '@/repositories/runCrawler';
 import getAuthImage from '@/repositories/getAuthImage';
 import putAuthImage from '@/repositories/putAutuImage';
 import { TailSpin } from 'react-loader-spinner';
+import useGetAuthImage from '@/api/getAuthImage';
+import usePutAuthImage from '@/api/putAuthImage';
 
 type Props = {
     id: string;
@@ -19,6 +21,10 @@ export default function Update({ id }: Props) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [authImage, setAuthImage] = useState<AuthImageItem | undefined>(undefined);
 
+    // APIサーバ
+    const { mutateAsync } = usePutAuthImage();
+    const { data, refetch } = useGetAuthImage(id);
+
     const {
         register,
         handleSubmit,
@@ -31,11 +37,21 @@ export default function Update({ id }: Props) {
         setIsLoading(true);
         await runCrawler();
         for (let i = 0; i < 10; i++) {
-            const authImage = await getAuthImage(id) as AuthImageItem;
-            if (authImage?.binary) {
-                setAuthImage(authImage);
+
+            // DynamoDBクライアント
+            // const authImage = await getAuthImage(id) as AuthImageItem;
+            // if (authImage?.binary) {
+            //     setAuthImage(authImage);
+            //     break;
+            // }
+
+            // APIサーバ
+            const { data } = await refetch();
+            if (data?.binary) {
+                setAuthImage(data);
                 break;
             }
+
             await new Promise((resolve) => setTimeout(resolve, 3000));
         }
         setIsLoading(false);
@@ -47,10 +63,20 @@ export default function Update({ id }: Props) {
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         // console.log(data)
-        const text = data.text;
-        const response = await putAuthImage(id, text);
-        if (response.$metadata.httpStatusCode === 200) {
+
+        // DynamoDB Client
+        // const text = data.text;
+        // const response = await putAuthImage(id, text);
+        // if (response.$metadata.httpStatusCode === 200) {
+        //     reset();
+        // }
+
+        // APIサーバ
+        try {
+            await mutateAsync({ ...data, id: id, dataType: 'authImage', binary: "" })
             reset();
+        } catch (error) {
+            console.error(error)
         }
     }
 

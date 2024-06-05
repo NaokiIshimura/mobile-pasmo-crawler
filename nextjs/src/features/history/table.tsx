@@ -16,7 +16,7 @@ type HistoryItem = {
 
 export default function Table({ history }: Props) {
 
-    if (history.length === 0) {
+    if (!history || history.length === 0) {
         return <></>
     }
 
