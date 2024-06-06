@@ -10,7 +10,7 @@ if (!server) {
 }
 
 function getHistories(id, card) {
-    return axios.get(`http://${server}/accounts/${id}/cards/${card}/histories`)
+    return axios.get(`${server}/accounts/${id}/cards/${card}/histories`)
 }
 
 export default function useGetHistories(id, card) {

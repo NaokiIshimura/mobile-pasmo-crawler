@@ -33,7 +33,7 @@ func GetAccount(c *gin.Context) {
 		return
 	}
 	// パスワードをマスクする
-	accountData.Password = "*****"
+	accountData.Password = "**********"
 	// レスポンスJSONを返す
 	jsonData, err := json.Marshal(accountData)
 	if err != nil {

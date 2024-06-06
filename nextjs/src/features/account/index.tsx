@@ -1,12 +1,16 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import putAccount from "@/repositories/putAccount";
 import usePutAccount from '@/api/putAccount';
+import useGetAccount from '@/api/getAccount';
 
 type Props = {
     id: string;
 }
 
 export default function AuthAccount({ id }: Props) {
+
+    const { data, isLoading, refetch } = useGetAccount(id);
+    // console.log(data);
 
     type Inputs = {
         mailAddress: string;
@@ -44,6 +48,23 @@ export default function AuthAccount({ id }: Props) {
 
     return (
         <div className="py-5">
+            <div className="pasmo-block mb-5">
+                <div className="pasmo-header">
+                    <span>アカウント情報</span>
+                </div>
+                <div className="pasmo-body">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <p className='my-3 mr-5 py-1 px-3'>
+                            <span className="inline-block w-32">メールアドレス</span>
+                            <span>{data.mailAddress}</span>
+                        </p>
+                        <p className='my-3 mr-5 py-1 px-3'>
+                            <span className="inline-block w-32">パスワード</span>
+                            <span>{data.password}</span>
+                        </p>
+                    </form>
+                </div>
+            </div>
             <div className="pasmo-block">
                 <div className="pasmo-header">
                     <span>アカウント更新</span>
@@ -56,6 +77,6 @@ export default function AuthAccount({ id }: Props) {
                     </form>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

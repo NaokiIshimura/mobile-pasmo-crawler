@@ -37,14 +37,22 @@ func GetRouter() *gin.Engine {
 		},
 		// アクセス許可するHTTPメソッド
 		AllowMethods: []string{
-			"GET",
-			"POST",
-			"OPTIONS",
+			"GET", "POST", "OPTIONS",
 		},
 		AllowHeaders: []string{
-			"Content-Type",
+			"*",
 		},
 	}))
+
+	// "Content-Type", "application/json"をヘッダーに付けている場合、
+	// プリフライトリクエストが起きるので、OPTIONSメソッドのレスポンスを設定する
+	// https://qiita.com/laughingman/items/4ff20268fa34dc9e1be3
+	router.OPTIONS("/*path", func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "*")
+		c.Status(200)
+	})
 
 	// ルーティング
 	router.GET("/accounts/:account", controller.GetAccount)

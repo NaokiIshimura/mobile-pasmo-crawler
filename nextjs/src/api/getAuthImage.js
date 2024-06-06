@@ -12,13 +12,17 @@ import {
 import axios from 'axios';
 
 const server = process.env.NEXT_PUBLIC_API_SERVER_HOST_NAME;
+const token = process.env.NEXT_PUBLIC_API_SERVER_AUTH_TOKEN;
 
 if (!server) {
     throw new Error('Environment variables are not set properly');
 }
 
 function getAuthImage(id) {
-    return axios.get(`http://${server}/accounts/${id}/authImage`)
+    const headers = {
+        'Authorization': token
+    }
+    return axios.get(`${server}/accounts/${id}/authImage`, { headers: headers })
 }
 
 export default function useGetAccount(id) {

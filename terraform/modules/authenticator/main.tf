@@ -136,6 +136,12 @@ resource "aws_apigatewayv2_api" "main" {
   name          = "${var.prefix}-api"
   protocol_type = "HTTP"
   target        = aws_lambda_function.main.arn
+
+  # cors_configuration {
+  #   allow_methods = ["GET", "POST", "OPTIONS"]
+  #   allow_origins = ["http://localhost:3000"]
+  #   allow_headers = ["Authorization", "Content-Type", "application/json"]
+  # }
 }
 
 resource "aws_lambda_permission" "main" {
@@ -184,6 +190,7 @@ resource "aws_lambda_function" "ip_restrict_lambda" {
 
   environment {
     variables = {
+      AUTH_TOKEN       = var.auth_token
       ALLOW_IP_ADDRESS = var.allow_ip_address
     }
   }
@@ -205,9 +212,12 @@ resource "aws_apigatewayv2_authorizer" "main" {
   authorizer_result_ttl_in_seconds  = 0
   # identity_sourcesについて、
   # 普通は「$request.header.Authorization"」などを指定する
-  # 今回のユースケースでは認証は行わないので不要だが、必須パラメータなので「ソースIP」「パス」などを指定
+  # 今回のユースケースでは認証は行わないので不要だが、必須パラメータなのでリクエストに含まれてる値を指定
   # (identity_sourcesで指定してるパラメータがリクエストに無いと、authorizerが呼ばれないので注意)
-  identity_sources = ["$context.identity.sourceIp", "$context.path", "$context.protocol", "$request.header.Authorization"]
+  # 参考
+  # identity_sources = ["$context.identity.sourceIp", "$context.path", "$context.protocol", 
+  #                     "$request.header.origin", "$request.header.user-agent", "$request.header.authorization"]
+  identity_sources = ["$request.header.host"]
 
   # オーソライザーを作成したあと、ルートに紐づける
   # （quick_createの場合、ルートのリソースが自動的に作成されて、ルートにオーソライザーを紐づけることができないため、コマンドを実行させて紐づける）

@@ -6,8 +6,19 @@
 export const handler = async (event, context) => {
   // デバッグ用
   // console.log('event', event);
-  // const sourceIp = event.requestContext.http.sourceIp;
-  // console.log('sourceIp', sourceIp);
+  // console.log('sourceIp', event.requestContext.http.sourceIp);
+  // console.log('method', event.requestContext.http.method);
+  // console.log('authorization', event.headers.authorization);
+
+  // 許可するAuthorizationヘッダー
+  const auth_token = process.env.AUTH_TOKEN;
+
+  // CORSプリフライトリクエストではない場合、
+  // かつ、
+  // Authorizationヘッダーが設定されていない場合は拒否
+  if (event.requestContext.http.method != "OPTIONS" && event.headers.authorization != auth_token) {
+    return false;
+  }
 
   // アクセスを許可するIPアドレス（"xxx.xxx.xxx.xxx/32"）
   const allow_ip_address = process.env.ALLOW_IP_ADDRESS;
