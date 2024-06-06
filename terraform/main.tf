@@ -24,7 +24,6 @@ locals {
 module "authenticator" {
   source           = "./modules/authenticator"
   prefix           = "${local.prefix}-authenticator"
-  auth_token       = var.auth_token
   allow_ip_address = var.allow_ip_address
 }
 

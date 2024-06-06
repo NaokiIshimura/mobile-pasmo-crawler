@@ -190,7 +190,6 @@ resource "aws_lambda_function" "ip_restrict_lambda" {
 
   environment {
     variables = {
-      AUTH_TOKEN       = var.auth_token
       ALLOW_IP_ADDRESS = var.allow_ip_address
     }
   }

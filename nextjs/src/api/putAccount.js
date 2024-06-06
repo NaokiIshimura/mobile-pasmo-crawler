@@ -16,7 +16,6 @@ import {
 import axios from 'axios';
 
 const server = process.env.NEXT_PUBLIC_API_SERVER_HOST_NAME;
-const token = process.env.NEXT_PUBLIC_API_SERVER_AUTH_TOKEN;
 
 if (!server) {
     throw new Error('Environment variables are not set properly');
@@ -24,8 +23,7 @@ if (!server) {
 
 function putAccount(data) {
     const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token
+        'Content-Type': 'application/json'
     }
     return axios.post(`${server}/accounts/${data.id}`, data, { headers: headers })
 }
