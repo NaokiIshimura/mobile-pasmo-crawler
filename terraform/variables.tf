@@ -1,9 +1,9 @@
 variable "auth_token" {
-  description = "認証トークン"
+  description = "APIサーバの認証トークン"
   type        = string
 }
 
 variable "allow_ip_address" {
-  description = "アクセス許可するIPアドレス"
+  description = "IPサーバへアクセス許可するIPアドレス"
   type        = string
 }
