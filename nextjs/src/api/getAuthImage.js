@@ -18,7 +18,7 @@ if (!server) {
 }
 
 function getAuthImage(id) {
-    return axios.get(`http://${server}/accounts/${id}/authImage`)
+    return axios.get(`${server}/accounts/${id}/authImage`)
 }
 
 export default function useGetAccount(id) {

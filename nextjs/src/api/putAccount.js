@@ -22,7 +22,10 @@ if (!server) {
 }
 
 function putAccount(data) {
-    return axios.post(`http://${server}/accounts/${data.id}`, data)
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+    return axios.post(`${server}/accounts/${data.id}`, data, { headers: headers })
 }
 
 export default function usePutAccount() {

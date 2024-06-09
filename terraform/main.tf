@@ -22,8 +22,9 @@ locals {
 # # authenticator
 # ################################################################################
 module "authenticator" {
-  source = "./modules/authenticator"
-  prefix = "${local.prefix}-authenticator"
+  source           = "./modules/authenticator"
+  prefix           = "${local.prefix}-authenticator"
+  allow_ip_address = var.allow_ip_address
 }
 
 # ################################################################################

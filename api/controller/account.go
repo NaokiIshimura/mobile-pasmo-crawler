@@ -32,6 +32,8 @@ func GetAccount(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	// パスワードをマスクする
+	accountData.Password = "**********"
 	// レスポンスJSONを返す
 	jsonData, err := json.Marshal(accountData)
 	if err != nil {

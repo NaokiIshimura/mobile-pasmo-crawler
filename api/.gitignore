@@ -1,2 +1,6 @@
+# env file
 .env
+
+# binary
 app
+bootstrap

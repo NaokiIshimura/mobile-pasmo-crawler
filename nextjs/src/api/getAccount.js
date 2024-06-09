@@ -17,7 +17,7 @@ if (!server) {
 }
 
 function getAccount(id) {
-    return axios.get(`http://${server}/accounts/${id}`)
+    return axios.get(`${server}/accounts/${id}`)
 }
 
 export default function useGetAccount(id) {
